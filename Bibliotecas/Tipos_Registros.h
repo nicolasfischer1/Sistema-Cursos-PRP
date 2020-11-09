@@ -8,7 +8,7 @@
 struct aluno //  Estrutura (registro) "aluno"
 {
     int matricula;
-    char nome[60];
+    wchar_t nome[60];
     int idade;
     int turma;
 };
@@ -16,8 +16,8 @@ struct aluno //  Estrutura (registro) "aluno"
 struct turma //   Estrutura (registro) "turma"
 {
     int codigo;
-    char curso[60];
-    char turno; // [M] para manhã; [T] para tarde; [N] para noite
+    wchar_t curso[60];
+    wchar_t turno; // [M] para manhã; [T] para tarde; [N] para noite
     int qtd_alunos;
     int qtd_limite;
 };
