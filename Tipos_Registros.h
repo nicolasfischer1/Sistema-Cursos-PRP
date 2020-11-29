@@ -11,6 +11,7 @@ struct aluno //  Estrutura (registro) "aluno"
     wchar_t nome[60];
     int idade;
     int turma;
+    int aux;
 };
 
 struct turma //   Estrutura (registro) "turma"

@@ -15,23 +15,23 @@ int qtd_turmas(void);
 int entrada_dados_turma(Turma *nova_turma)
 {
     //  Questionando o usuário as informações da turma, limpando buffer do teclado, lendo e armazenando-as no registro passado como parâmetro
-    printf("Digite o n%cmero que ir%c atribuir %c turma (sendo ele maior que 0): ", 163, 160, 133);
+    printf("Codigo: ", 163, 160, 133);
     fflush(stdin);
     scanf("%d", &nova_turma->codigo);
 
     Turma validador = busca_turma((*nova_turma).codigo);
 
-    if ( (validador.codigo != nova_turma->codigo) && (nova_turma->codigo >= 0) )
+    if ((validador.codigo != nova_turma->codigo) && (nova_turma->codigo >= 0))
     {
-        printf("Digite o curso: ");
+        printf("Curso: ");
         fflush(stdin);
         wscanf(L"%ls", &nova_turma->curso);
 
-        printf("Digite o turno:\n[m] para manh%c\n[t] para tarde\n[n] para noite\n>> ", 198);
+        printf("Turno:\n[m] para manh%c\n[t] para tarde\n[n] para noite\n>> ", 198);
         fflush(stdin);
         wscanf(L"%lc", &nova_turma->turno);
 
-        printf("Digite a quantidade limite de alunos na turma: ");
+        printf("Quantidade limite de alunos: ");
         fflush(stdin);
         scanf("%d", &nova_turma->qtd_limite);
         return 1;
@@ -128,7 +128,6 @@ Turma busca_turma(int aux)
         printf("Problema no arquivo 'Turmas.bin'\n");
         return turma_aux;
     }
-
 }
 
 int qtd_turmas(void)
@@ -140,8 +139,7 @@ int qtd_turmas(void)
         Turma turma_aux;
         while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas))
         {
-            if (turma_aux.codigo >= 0)
-                contador++;
+            contador++;
         }
         fclose(arquivo_turmas);
         return contador;
@@ -163,6 +161,7 @@ void cria_lista_espera(void)
         Turma nova_turma; //  Criando registro temporário (visível apenas dentro desta condicional)
         nova_turma.codigo = -1;
         nova_turma.qtd_alunos = 0;                             //  Inicializa a quantidade de alunos da turma com 0;
+        nova_turma.qtd_limite = nova_turma.qtd_alunos + 1;
         fwrite(&nova_turma, sizeof(Turma), 1, arquivo_turmas); //  "Escreve" o registro dentro do arquivo
         fclose(arquivo_turmas);
     }

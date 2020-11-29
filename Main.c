@@ -1,40 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Bibliotecas/Manipulacao_Alunos.h"
-#include "Bibliotecas/Manipulacao_Turmas.h"
-#include "Bibliotecas/Tipos_Registros.h"
+#include <windows.h>
+
+#include "Manipulacao_Alunos.h"
 
 int main(void)
 {
     int escolha;
-
-    //  Caso não tenha sido criada a lista de espera
-    Turma aux;
-    aux = busca_turma(-1);
-    if (aux.codigo != -1)
+    Aluno aux_a;
+    //  Caso nao tenha sido criada a lista de espera
+    Turma aux_t;
+    aux_t = busca_turma(-1);
+    if (aux_t.codigo != -1)
         cria_lista_espera();
 
+    
     while (1)
     {
+    	int i=0;
+    	int validador = qtd_alunos_cadastrados();
+    	
         printf("Digite o n%cmero correspondente %c op%c%co desejada:\n", 163, 133, 135, 198);
         printf("[0] Sair e encerrar o programa\n");
         printf("[1] Cadastrar nova turma\n");
         printf("[2] Cadastrar aluno na lista de espera\n");
+        printf("[3] Ver lista de espera\n");
 
-        if (qtd_turmas() != 0)
+        if (qtd_turmas() > 1)
         {
-            printf("[3] Ver todas as turmas\n");
-            printf("[4] Buscar turma\n");
-            printf("[5] Editar turma\n");
-            printf("[6] Excluir turma\n");
-            printf("[7] Ver quantidade de turmas cadastradas\n");
-            printf("[8] Cadastrar aluno\n");
+            printf("[4] Ver todas as turmas\n");
+            printf("[5] Buscar turma\n");
+            printf("[6] Editar turma\n");
+            printf("[7] Excluir turma\n");
+            printf("[8] Ver quantidade de turmas cadastradas\n");
+            printf("[9] Cadastrar aluno\n");
         }
 
-        /*
-        if (qtd_alunos() != 0)
+        
+        if (qtd_turmas() > 1 && validador > 0)
         {
-            printf("[9] Ver lista de espera\n");
+
             printf("[10] Ver os alunos de uma turma\n");
             printf("[11] Ver todos os alunos\n");
             printf("[12] Buscar aluno pela matr%ccula\n", 161);
@@ -42,7 +47,7 @@ int main(void)
             printf("[14] Desmatricular aluno\n");
             printf("[15] Ver quantidade de alunos cadastrados\n");
         }
-*/
+
 
         fflush(stdin);
         scanf("%d", &escolha);
@@ -51,84 +56,105 @@ int main(void)
         {
         case 0:
             printf("\nAt%c logo!!\n", 130);
-            sleep(5);
+            Sleep(5);
             exit(1);
         case 1:
             cadastro_turma();
             break;
-        /*case 2:
+        case 2:
             cadastrar_aluno_espera();
-            break;*/
+            break;
+        case 3:
+            imprime_lista_espera();
+            break;
         }
 
-        if (qtd_turmas() != 0)
+        if (qtd_turmas() > 1)
         {
+
             switch (escolha)
             {
-            case 3:
+            
+            case 4:
                 imprime_todas_turmas();
                 break;
-            case 4:
-                printf("Digite o código da turma para buscar: ");
+
+            case 5:
+                printf("Codigo: ");
                 fflush(stdin);
-                scanf("%d", &escolha);
-                aux = busca_turma(escolha);
-                if (aux.codigo >= 0)
-                    imprime_turma(aux);
+                scanf("%d", &i);
+                aux_t = busca_turma(i);
+                if (aux_t.codigo >= 0)
+                    imprime_turma(aux_t);
+                else
+                	printf("\nTurma n encontrada\n");
                 break;
-            /* case 5:
-                editar_turma(escolha);
-                break;
-            case 6:
-                printf("Digite o código da turma que deseja excluir: ");
-                fflush(stdin);
-                scanf("%d", &escolha);
-                aux = busca_turma(escolha);
-                if (aux.codigo >= 0)
-                    excluir_turma(escolha);
+            /* case 6:
+                editar_turma(i);
                 break;*/
-            case 7:
-                printf("Há %d turma (s)!\n", qtd_turmas());
+            /*case 7:
+                printf("Digite o codigo da turma que deseja excluir: ");
+                fflush(stdin);
+                scanf("%d", &i);
+                aux = busca_turma(i);
+                if (aux.codigo >= 0)
+                    excluir_turma(i);
+                break;*/
+            case 8:
+                printf("Ha %d turma(s)!\n", qtd_turmas()-1);
                 break;
-            /*case 8:
+
+            case 9:
                 cadastrar_aluno();
-                break;*/
+                break;
+            
             }
         }
 
     
-     if (qtd_alunos() != 0)
+     if (qtd_turmas() > 1 && validador > 0)
      {
      switch (escolha)
-            {
-                case 9:
-                    imprime_lista_espera();
-                    break;
-                /*case 10:
-                    printf("Digite o código da turma que deseja ver: ");
+            {  
+                case 10:
+                    printf("Codigo: ");
                     fflush(stdin);
-                    scanf("%d", &escolha);
-                    aux = busca_turma(escolha);
-                    if (aux.codigo >= 0)
-                        imprimir_alunos_turma(escolha);
+                    scanf("%d", &i);
+                    aux_t = busca_turma(i);
+                    if (aux_t.codigo >= 0)
+                        imprime_alunos_turma(aux_t);
                     break;
                 case 11:
                     imprimir_todos_alunos();
                     break;
                 case 12:
-                .
-                .
-                .
-                .
-                .
-                .
-                .
-                .
-                */
-                default:
-                    printf("Opção inválida!\n");
+                    printf("Matricula: ");
+                    fflush(stdin);
+                    scanf("%d", &i);
+                    aux_a = buscar_aluno(i);
+                    if (aux_a.matricula != -2)
+                        imprime_aluno(aux_a);
+                    else
+                        printf("Aluno nao encontrado!\n");
+                    break;
+                case 13:
+                    printf("Matricula: ");
+                    fflush(stdin);
+                    scanf("%d", &i);
+                    editar_aluno(i);
+                    break;
+                case 14:
+                    printf("Matricula: ");
+                    fflush(stdin);
+                    scanf("%d", &i);
+                    desmatricular_aluno(i);
+                    break;
+                case 15:
+                    printf("Ha %d alunos cadastrados (incluindo os da lista de espera)!\n", qtd_alunos_cadastrados());
                     break;
             }
+            if(escolha > 15 || escolha < 0)
+                printf("Opcao invalida!\n");
     }
     fflush(stdin);
     getchar();
