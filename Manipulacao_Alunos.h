@@ -5,15 +5,15 @@
 
 #include "Manipulacao_Turmas.h"
 
-//  ProtÛtipos das funÁıes
+//  Prot√≥tipos das fun√ß√µes
 void cadastrar_aluno_espera(void);			// cadastrar aluno na lista de espera    // pronto
 void cadastrar_aluno(void);					// cadastrar aluno                              // pronto
 void imprime_lista_espera(void);			// ver lista de espera                     // pronto
 void imprime_alunos_turma(Turma aux);		// ver os alunos de uma turma         // pronto
 void imprimir_todos_alunos(void);			// ver todos os alunos                    // pronto
-Aluno buscar_aluno(int matricula);			// buscar aluno pela matrÌcula           // pronto
+Aluno buscar_aluno(int matricula);			// buscar aluno pela matr√≠cula           // pronto
 void editar_aluno(int matricula);			// editar dados de um aluno               // pronto
-void desmatricular_aluno(int matricula);	// desmatricular aluno             // ultimo espaÁo duplicado e lista de espera
+void desmatricular_aluno(int matricula);	// desmatricular aluno             // ultimo espa√ßo duplicado e lista de espera
 int qtd_alunos_cadastrados(void);			// ver quantidade de alunos cadastrados   // pronto
 int entrada_dados_aluno(Aluno *novo_aluno); // pronto
 void imprime_aluno(Aluno aluno_aux);		// pronto
@@ -23,7 +23,7 @@ Aluno buscar_aluno(int matricula)
 
 	FILE *arquivo_alunos = fopen("Alunos.bin", "rb"); //  Abre o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
 
-	if (arquivo_alunos != NULL) //  Se for possÌvel abrir/criar o arquivo 'Alunos.bin'
+	if (arquivo_alunos != NULL) //  Se for poss√≠vel abrir/criar o arquivo 'Alunos.bin'
 	{
 		Aluno buscar;
 		while (fread(&buscar, sizeof(Aluno), 1, arquivo_alunos) == 1)
@@ -39,14 +39,14 @@ Aluno buscar_aluno(int matricula)
 		printf("Problema no arquivo 'Alunos.bin'\n");
 }
 
-void cadastrar_aluno_espera(void) // manipular o arquivo turmas e adicionar acrÈscimo do aluno na lista de espera!!!
+void cadastrar_aluno_espera(void) // manipular o arquivo turmas e adicionar acr√©scimo do aluno na lista de espera!!!
 {
 
-	FILE *arquivo_alunos = fopen("Alunos.bin", "a+b"); //  Abre/Cria o arquivo 'Alunos.bin' e posiciona o ponteiro no final dele (abertura para gravaÁ„o de dados)
+	FILE *arquivo_alunos = fopen("Alunos.bin", "a+b"); //  Abre/Cria o arquivo 'Alunos.bin' e posiciona o ponteiro no final dele (abertura para grava√ß√£o de dados)
 
-	if (arquivo_alunos != NULL) //  Se for possÌvel abrir/criar o arquivo 'Alunos.bin'
+	if (arquivo_alunos != NULL) //  Se for poss√≠vel abrir/criar o arquivo 'Alunos.bin'
 	{
-		Aluno aluno_espera; //  Criando registro tempor·rio (visÌvel apenas dentro desta condicional)
+		Aluno aluno_espera; //  Criando registro tempor√°rio (vis√≠vel apenas dentro desta condicional)
 		int validador = entrada_dados_aluno(&aluno_espera);
 		aluno_espera.aux = aluno_espera.turma;
 		aluno_espera.turma = -1;
@@ -79,7 +79,7 @@ void cadastrar_aluno_espera(void) // manipular o arquivo turmas e adicionar acrÈ
 	else
 		printf("Problema no arquivo 'Alunos.bin'\n");
 
-	fclose(arquivo_alunos); //  Salva as alteraÁıes, limpando o buffer e fechando o arquivo
+	fclose(arquivo_alunos); //  Salva as altera√ß√µes, limpando o buffer e fechando o arquivo
 }
 
 int entrada_dados_aluno(Aluno *novo_aluno)
@@ -191,18 +191,18 @@ void imprime_lista_espera(void)
 	{
 		FILE *arquivo_alunos = fopen("Alunos.bin", "rb"); //  Abre/Cria o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
 
-		if (arquivo_alunos != NULL) //  Se for possÌvel abrir/criar o arquivo 'Alunos.bin'
+		if (arquivo_alunos != NULL) //  Se for poss√≠vel abrir/criar o arquivo 'Alunos.bin'
 		{
 			Aluno aluno_espera;
 			while (fread(&aluno_espera, sizeof(Aluno), 1, arquivo_alunos) == 1)
-			{ //  Vai rodar enquanto ela conseguir retornar uma linha v·lida
+			{ //  Vai rodar enquanto ela conseguir retornar uma linha v√°lida
 				if (aluno_espera.turma == -1)
 					imprime_aluno(aluno_espera);
 			}
 			Turma verificador = busca_turma(-1);
 			if (verificador.qtd_alunos == 0)
 				printf("\nLista de espera vazia\n");
-			fclose(arquivo_alunos); //  Salva as alteraÁıes, limpando o buffer e fechando o arquivo
+			fclose(arquivo_alunos); //  Salva as altera√ß√µes, limpando o buffer e fechando o arquivo
 		}
 		else
 			printf("Problema no arquivo 'Alunos.bin'\n");
@@ -218,18 +218,18 @@ void imprimir_todos_alunos(void)
 
 	FILE *arquivo_alunos = fopen("Alunos.bin", "rb"); //  Abre/Cria o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
 
-	if (arquivo_alunos != NULL) //  Se for possÌvel abrir/criar o arquivo 'Alunos.bin'
+	if (arquivo_alunos != NULL) //  Se for poss√≠vel abrir/criar o arquivo 'Alunos.bin'
 	{
 		Aluno todos_alunos;
 		todos_alunos.turma = -2;
 		while (fread(&todos_alunos, sizeof(Aluno), 1, arquivo_alunos) == 1)
-		{ //  Vai rodar enquanto ela conseguir retornar uma linha v·lida
+		{ //  Vai rodar enquanto ela conseguir retornar uma linha v√°lida
 			imprime_aluno(todos_alunos);
 		}
 		if (todos_alunos.turma == -2)
 			printf("\nN%co h%c alunos!\n", 198, 160);
 
-		fclose(arquivo_alunos); //  Salva as alteraÁıes, limpando o buffer e fechando o arquivo
+		fclose(arquivo_alunos); //  Salva as altera√ß√µes, limpando o buffer e fechando o arquivo
 	}
 	else
 		printf("Problema no arquivo 'Alunos.bin'\n");
@@ -241,15 +241,15 @@ void imprime_alunos_turma(Turma aux)
 	FILE *arquivo_alunos = fopen("Alunos.bin", "rb"); //  Abre/Cria o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
 
 	if (arquivo_alunos != NULL)
-	{ //  Se for possÌvel abrir/criar o arquivo 'Alunos.bin'
+	{ //  Se for poss√≠vel abrir/criar o arquivo 'Alunos.bin'
 		Aluno aluno_turma;
 
 		while (fread(&aluno_turma, sizeof(Aluno), 1, arquivo_alunos))
-		{ //  Vai rodar enquanto ela conseguir retornar uma linha v·lida
+		{ //  Vai rodar enquanto ela conseguir retornar uma linha v√°lida
 			if (aux.codigo == aluno_turma.turma)
 				imprime_aluno(aluno_turma);
 		}
-		fclose(arquivo_alunos); //  Salva as alteraÁıes, limpando o buffer e fechando o arquivo
+		fclose(arquivo_alunos); //  Salva as altera√ß√µes, limpando o buffer e fechando o arquivo
 	}
 	else
 		printf("Problema no arquivo 'Alunos.bin'\n");
@@ -260,7 +260,7 @@ void editar_aluno(int matricula)
 
 	FILE *arquivo_alunos = fopen("Alunos.bin", "r+b"); //  Abre/Cria o arquivo 'Alunos.bin' "w+b"(abertura para leitura de dados)
 
-	if (arquivo_alunos != NULL) //  Se for possÌvel abrir/criar o arquivo 'Alunos.bin'
+	if (arquivo_alunos != NULL) //  Se for poss√≠vel abrir/criar o arquivo 'Alunos.bin'
 	{
 		Aluno editar = buscar_aluno(matricula);
 		if (editar.matricula != -2)
@@ -275,7 +275,7 @@ void editar_aluno(int matricula)
 			}
 			fseek(arquivo_alunos, sizeof(Aluno) * -1, SEEK_CUR);
 			fwrite(&editar, sizeof(Aluno), 1, arquivo_alunos);
-			fclose(arquivo_alunos); //  Salva as alteraÁıes, limpando o buffer e fechando o arquivo
+			fclose(arquivo_alunos); //  Salva as altera√ß√µes, limpando o buffer e fechando o arquivo
 		}
 		else
 			printf("Aluno nao encontrado!\n");
@@ -285,66 +285,76 @@ void editar_aluno(int matricula)
 }
 
 void desmatricular_aluno(int matricula)
-{ // fazer a lista de espera andar!!!
+{
 
 	FILE *arquivo_a = fopen("Alunos.bin", "r+b"); //  Abre/Cria o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
-	FILE *arquivo_b;
 
-	if (arquivo_a != NULL) //  Se for possÌvel abrir/criar o arquivo 'Alunos.bin'
+	int aluno_foi_encontrado = 0; //Vari√°vel booleana para aluno encontrado
+
+	if (arquivo_a != NULL) //  Se for poss√≠vel abrir/criar o arquivo 'Alunos.bin'
 	{
-		Aluno desmatricular;
-		Aluno aux;
-		while (fread(&desmatricular, sizeof(Aluno), 1, arquivo_a))
+	    //Obt√©m o tamanho do arquivo
+        fseek(arquivo_a, 0, SEEK_END); //Vai at√© o final
+	    int tamanho_maximo = ftell(arquivo_a); //Obt√©m a posi√ß√£o em bytes em rela√ß√£o ao come√ßo
+	    fseek(arquivo_a, 0, SEEK_SET); //Volta o cursor do arquivo para o in√≠cio
+
+		Aluno desmatricular; //Vari√°vel para procurar o aluno a ser desmatriculado
+		Aluno aux; //Vari√°vel para o deslocamento dos registros no arquivo
+
+		while (fread(&desmatricular, sizeof(Aluno), 1, arquivo_a)) //Percorre o arquivo procurando pelo aluno a ser desmatriculado
 		{
-			if (desmatricular.matricula == matricula && !feof(arquivo_a))
+			if (desmatricular.matricula == matricula) //Se encontrar o aluno a ser desmatriculado
 			{
-				arquivo_b = arquivo_a;
-				fseek(arquivo_a, sizeof(Aluno) * -1, SEEK_CUR);
-				while (fread(&aux, sizeof(Aluno), 1, arquivo_b) != EOF)
-				{
-					fwrite(&aux, sizeof(Aluno), 1, arquivo_a);
-				}
 
-				int tamanho = ftell(arquivo_a);
+                if(ftell(arquivo_a) < tamanho_maximo){ //Se o aluno n√£o era o √∫ltimo do arquivo
 
-				fclose(arquivo_a);
+                    while (fread(&aux, sizeof(Aluno), 1, arquivo_a)) //Percorre o arquivo deslocando a lista
+                    {
+                        fseek(arquivo_a, sizeof(Aluno) * -2, SEEK_CUR); //Volta dois alunos para deslocar os registros √† esquerda corretamente
 
-				HANDLE arquivo = CreateFileW(L"Alunos.bin", GENERIC_WRITE, 0, NULL, 3, FILE_ATTRIBUTE_NORMAL, NULL);
+                        fwrite(&aux, sizeof(Aluno), 1, arquivo_a); //Sobrescreve o registro
 
-				SetFilePointer(arquivo, tamanho, NULL, 0);
+                        fseek(arquivo_a, sizeof(Aluno), SEEK_CUR); //Passa para o pr√≥ximo aluno a ser deslocado
+                    }
 
-				SetEndOfFile(arquivo);
+                    fseek(arquivo_a, sizeof(Aluno) * -1, SEEK_CUR); //Ao final, volta um aluno para poder truncar o duplicado no final do arquivo
 
-				break;
+                }else //Se o aluno era o √∫ltimo do arquivo
+                    fseek(arquivo_a, sizeof(Aluno) * -1, SEEK_CUR); //Volta um aluno para poder truncar o arquivo, removendo um aluno duplicado
+
+				int tamanho = ftell(arquivo_a); //Obt√©m a posi√ß√£o do novo final
+
+				fclose(arquivo_a); //Fecha o arquivo
+
+
+				//Esta parte trunca o arquivo
+				HANDLE arquivo = CreateFileW(L"Alunos.bin", GENERIC_WRITE, 0, NULL, 3, FILE_ATTRIBUTE_NORMAL, NULL); //Abre o arquivo
+
+				SetFilePointer(arquivo, tamanho, NULL, 0); //Modifica a posi√ß√£o do cursor
+
+				SetEndOfFile(arquivo); //Trunca o arquivo, modificando a posi√ß√£o de seu final
+
+                CloseHandle(arquivo); //Fecha o arquivo
+
+
+                aluno_foi_encontrado = 1; //Muda o estado da vari√°vel booleana para aluno encontrado
+
+				break; //Sai do escopo do while
 			}
-			else
-				printf("\nAluno n%co encontrado!\n", 198);
+
 		}
 
-		while (fread(&desmatricular, sizeof(Aluno), 1, arquivo_a))
-		{
-		}
+        if(aluno_foi_encontrado) //Se o aluno foi encontrado
+            printf("\nAluno desmatriculado!\n"); //Informa que o aluno foi desmatriculado
 
-		if (arquivo_a)
-			fclose(arquivo_a);
+        else{ //Se o aluno n√£o foi encontrado
+            printf("\nAluno n%co encontrado!\n", 198); //Informa que o aluno n√£o foi encontrado
+            fclose(arquivo_a); //Fecha o arquivo
+        }
 
-		arquivo_a = fopen("Turmas.bin", "rb");
-		Turma t_modificar;
-
-		while (fread(&t_modificar, sizeof(Turma), 1, arquivo_a))
-		{
-			if (desmatricular.turma == t_modificar.codigo)
-			{
-				t_modificar.qtd_alunos = -1;
-				fseek(arquivo_a, sizeof(Turma) * -1, SEEK_CUR);
-				fwrite(&t_modificar, sizeof(Turma), 1, arquivo_a);
-				break;
-			}
-		}
-		fclose(arquivo_a);
 	}
-	else
-		printf("Problema no arquivo 'Alunos.bin'\n");
+	else //Se n√£o foi poss√≠vel abrir ou criar o arquivo
+		printf("Problema no arquivo 'Alunos.bin'\n"); //Informa o problema
 }
 
 int qtd_alunos_cadastrados(void)
@@ -353,10 +363,10 @@ int qtd_alunos_cadastrados(void)
 
 	FILE *arquivo = fopen("Alunos.bin", "r+b"); //  Abre/Cria o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
 
-	if (arquivo != NULL) //  Se for possÌvel abrir/criar o arquivo 'Alunos.bin'
+	if (arquivo != NULL) //  Se for poss√≠vel abrir/criar o arquivo 'Alunos.bin'
 	{
-		Aluno aluno_cad;									 //  Criando registro tempor·rio (visÌvel apenas dentro desta condicional)
-		while (fread(&aluno_cad, sizeof(Aluno), 1, arquivo)) //  Vai rodar enquanto ela conseguir retornar uma linha v·lida
+		Aluno aluno_cad;									 //  Criando registro tempor√°rio (vis√≠vel apenas dentro desta condicional)
+		while (fread(&aluno_cad, sizeof(Aluno), 1, arquivo)) //  Vai rodar enquanto ela conseguir retornar uma linha v√°lida
 			contador += 1;									 // contador vai marcar a quantidade de alunos cadastrados
 	}
 	else
@@ -365,7 +375,7 @@ int qtd_alunos_cadastrados(void)
 		if (arquivo == NULL)
 			printf("Problema no arquivo 'Alunos.bin'\n");
 	}
-	fclose(arquivo); //  Salva as alteraÁıes, limpando o buffer e fechando o arquivo
+	fclose(arquivo); //  Salva as altera√ß√µes, limpando o buffer e fechando o arquivo
 	return contador;
 }
 
