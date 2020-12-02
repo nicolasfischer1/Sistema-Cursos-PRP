@@ -6,17 +6,17 @@
 #include "Manipulacao_Turmas.h"
 
 //  Protótipos das funções
-void cadastrar_aluno_espera(void);			// cadastrar aluno na lista de espera    // pronto
-void cadastrar_aluno(void);					// cadastrar aluno                              // pronto
-void imprime_lista_espera(void);			// ver lista de espera                     // pronto
-void imprime_alunos_turma(Turma aux);		// ver os alunos de uma turma         // pronto
-void imprimir_todos_alunos(void);			// ver todos os alunos                    // pronto
-Aluno buscar_aluno(int matricula);			// buscar aluno pela matrícula           // pronto
-void editar_aluno(int matricula);			// editar dados de um aluno               // pronto
-void desmatricular_aluno(int matricula);	// desmatricular aluno             // ultimo espaço duplicado e lista de espera
-int qtd_alunos_cadastrados(void);			// ver quantidade de alunos cadastrados   // pronto
-int entrada_dados_aluno(Aluno *novo_aluno); // pronto
-void imprime_aluno(Aluno aluno_aux);		// pronto
+void cadastrar_aluno_espera(void);			// cadastrar aluno na lista de espera
+void cadastrar_aluno(void);					// cadastrar aluno
+void imprime_lista_espera(void);			// ver lista de espera
+void imprime_alunos_turma(Turma aux);		// ver os alunos de uma turma
+void imprimir_todos_alunos(void);			// ver todos os alunos
+Aluno buscar_aluno(int matricula);			// buscar aluno pela matrícula
+void editar_aluno(int matricula);			// editar dados de um aluno
+void desmatricular_aluno(int matricula);	// desmatricular aluno ????ultimo espaço duplicado e lista de espera
+int qtd_alunos_cadastrados(void);			// ver quantidade de alunos cadastrados
+int entrada_dados_aluno(Aluno *novo_aluno); 
+void imprime_aluno(Aluno aluno_aux);		
 
 Aluno buscar_aluno(int matricula)
 {

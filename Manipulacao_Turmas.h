@@ -3,18 +3,18 @@
 
 #include "Tipos_Registros.h"
 
-//  ProtÛtipos das funÁıes
-int entrada_dados_turma(Turma *nova_turma);
-Turma busca_turma(int aux);
-int cadastro_turma(void);
-void cria_lista_espera(void);
-void imprime_turma(Turma aux);
-void imprime_todas_turmas(void);
-int qtd_turmas(void);
+//  Prot√≥tipos das fun√ß√µes
+int entrada_dados_turma(Turma *nova_turma); 
+Turma busca_turma(int aux); 
+int cadastro_turma(void); 
+void cria_lista_espera(void); 
+void imprime_turma(Turma aux); 
+void imprime_todas_turmas(void); 
+int qtd_turmas(void); 
 
 int entrada_dados_turma(Turma *nova_turma)
 {
-    //  Questionando o usu·rio as informaÁıes da turma, limpando buffer do teclado, lendo e armazenando-as no registro passado como par‚metro
+    //  Questionando o usu√°rio as informa√ß√µes da turma, limpando buffer do teclado, lendo e armazenando-as no registro passado como par√¢metro
     printf("Codigo: ", 163, 160, 133);
     fflush(stdin);
     scanf("%d", &nova_turma->codigo);
@@ -45,26 +45,26 @@ int entrada_dados_turma(Turma *nova_turma)
 
 int cadastro_turma(void)
 {
-    FILE *arquivo_turmas = fopen("Turmas.bin", "a+b"); //  Abre/Cria o arquivo 'Turmas.bin' e posiciona o ponteiro no final dele (abertura para gravaÁ„o de dados)
+    FILE *arquivo_turmas = fopen("Turmas.bin", "a+b"); //  Abre/Cria o arquivo 'Turmas.bin' e posiciona o ponteiro no final dele (abertura para grava√ß√£o de dados)
 
-    if (arquivo_turmas != NULL) //  Se for possÌvel abrir/criar o arquivo 'Turmas.bin'
+    if (arquivo_turmas != NULL) //  Se for poss√≠vel abrir/criar o arquivo 'Turmas.bin'
     {
-        Turma nova_turma; //  Criando registro tempor·rio (visÌvel apenas dentro desta condicional)
+        Turma nova_turma; //  Criando registro tempor√°rio (vis√≠vel apenas dentro desta condicional)
         if (entrada_dados_turma(&nova_turma) == 1)
         {
             nova_turma.qtd_alunos = 0;                             //  Inicializa a quantidade de alunos da turma com 0;
             fwrite(&nova_turma, sizeof(Turma), 1, arquivo_turmas); //  "Escreve" o registro dentro do arquivo
-            fclose(arquivo_turmas);                                //  Salva as alteraÁıes, limpando o buffer e fechando o arquivo
+            fclose(arquivo_turmas);                                //  Salva as altera√ß√µes, limpando o buffer e fechando o arquivo
             system("cls");                                         //  Limpa tela depois que grava os dados no registro
             printf("\nTurma cadastrada com sucesso!\n");
             getchar();
             return 1; //  Retorno verdadeiro de processo bem sucedido
         }
     }
-    else //  Caso n„o seja possÌvel abrir o arquivo 'Turmas.bin'
+    else //  Caso n√£o seja poss√≠vel abrir o arquivo 'Turmas.bin'
     {
         printf("Problema no arquivo 'Turmas.bin'\n");
-        return 0; //  Retorno falso de processo n„o efetuado
+        return 0; //  Retorno falso de processo n√£o efetuado
     }
 }
 
@@ -93,7 +93,7 @@ void imprime_todas_turmas(void)
             }
             fclose(arquivo_turmas);
         }
-        else //  Caso n„o seja possÌvel abrir o arquivo 'Turmas.bin'
+        else //  Caso n√£o seja poss√≠vel abrir o arquivo 'Turmas.bin'
         {
             printf("Problema no arquivo 'Turmas.bin'\n");
         }
@@ -154,18 +154,18 @@ int qtd_turmas(void)
 void cria_lista_espera(void)
 
 {
-    FILE *arquivo_turmas = fopen("Turmas.bin", "a+b"); //  Abre/Cria o arquivo 'Turmas.bin' e posiciona o ponteiro no final dele (abertura para gravaÁ„o de dados)
+    FILE *arquivo_turmas = fopen("Turmas.bin", "a+b"); //  Abre/Cria o arquivo 'Turmas.bin' e posiciona o ponteiro no final dele (abertura para grava√ß√£o de dados)
 
-    if (arquivo_turmas != NULL) //  Se for possÌvel abrir/criar o arquivo 'Turmas.bin'
+    if (arquivo_turmas != NULL) //  Se for poss√≠vel abrir/criar o arquivo 'Turmas.bin'
     {
-        Turma nova_turma; //  Criando registro tempor·rio (visÌvel apenas dentro desta condicional)
+        Turma nova_turma; //  Criando registro tempor√°rio (vispivel apenas dentro desta condicional)
         nova_turma.codigo = -1;
         nova_turma.qtd_alunos = 0;                             //  Inicializa a quantidade de alunos da turma com 0;
         nova_turma.qtd_limite = nova_turma.qtd_alunos + 1;
         fwrite(&nova_turma, sizeof(Turma), 1, arquivo_turmas); //  "Escreve" o registro dentro do arquivo
         fclose(arquivo_turmas);
     }
-    else //  Caso n„o seja possÌvel abrir o arquivo 'Turmas.bin'
+    else //  Caso n√£o seja poss√≠vel abrir o arquivo 'Turmas.bin'
     {
         printf("Problema no arquivo 'Turmas.bin'\n");
         getchar();

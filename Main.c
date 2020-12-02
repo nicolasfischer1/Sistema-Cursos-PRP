@@ -39,7 +39,7 @@ int main(void)
         
         if (qtd_turmas() > 1 && validador > 0)
         {
-
+            
             printf("[10] Ver os alunos de uma turma\n");
             printf("[11] Ver todos os alunos\n");
             printf("[12] Buscar aluno pela matr%ccula\n", 161);
