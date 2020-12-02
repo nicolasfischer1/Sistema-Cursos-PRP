@@ -4,18 +4,18 @@
 #include "Tipos_Registros.h"
 
 //  Protótipos das funções
-int entrada_dados_turma(Turma *nova_turma); 
-Turma busca_turma(int aux); 
-int cadastro_turma(void); 
-void cria_lista_espera(void); 
-void imprime_turma(Turma aux); 
-void imprime_todas_turmas(void); 
-int qtd_turmas(void); 
+int entrada_dados_turma(Turma *nova_turma);
+Turma busca_turma(int aux);
+int cadastro_turma(void);
+void cria_lista_espera(void);
+void imprime_turma(Turma aux);
+void imprime_todas_turmas(void);
+int qtd_turmas(void);
 
 int entrada_dados_turma(Turma *nova_turma)
 {
     //  Questionando o usuário as informações da turma, limpando buffer do teclado, lendo e armazenando-as no registro passado como parâmetro
-    printf("Codigo: ", 163, 160, 133);
+    printf("C%cdigo: ", 162);
     fflush(stdin);
     scanf("%d", &nova_turma->codigo);
 
@@ -158,7 +158,7 @@ void cria_lista_espera(void)
 
     if (arquivo_turmas != NULL) //  Se for possível abrir/criar o arquivo 'Turmas.bin'
     {
-        Turma nova_turma; //  Criando registro temporário (vispivel apenas dentro desta condicional)
+        Turma nova_turma; //  Criando registro temporário (visível apenas dentro desta condicional)
         nova_turma.codigo = -1;
         nova_turma.qtd_alunos = 0;                             //  Inicializa a quantidade de alunos da turma com 0;
         nova_turma.qtd_limite = nova_turma.qtd_alunos + 1;

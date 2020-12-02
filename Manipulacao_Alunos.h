@@ -6,15 +6,15 @@
 #include "Manipulacao_Turmas.h"
 
 //  Protótipos das funções
-void cadastrar_aluno_espera(void);			// cadastrar aluno na lista de espera
-void cadastrar_aluno(void);					// cadastrar aluno
-void imprime_lista_espera(void);			// ver lista de espera
-void imprime_alunos_turma(Turma aux);		// ver os alunos de uma turma
-void imprimir_todos_alunos(void);			// ver todos os alunos
-Aluno buscar_aluno(int matricula);			// buscar aluno pela matrícula
-void editar_aluno(int matricula);			// editar dados de um aluno
-void desmatricular_aluno(int matricula);	// desmatricular aluno ????ultimo espaço duplicado e lista de espera
-int qtd_alunos_cadastrados(void);			// ver quantidade de alunos cadastrados
+void cadastrar_aluno_espera(void);			// cadastrar aluno na lista de espera     
+void cadastrar_aluno(void);					// cadastrar aluno                        
+void imprime_lista_espera(void);			// ver lista de espera                   
+void imprime_alunos_turma(Turma aux);		// ver os alunos de uma turma             
+void imprimir_todos_alunos(void);			// ver todos os alunos                    
+Aluno buscar_aluno(int matricula);			// buscar aluno pela matrícula           
+void editar_aluno(int matricula);			// editar dados de um aluno               
+void desmatricular_aluno(int matricula);	// desmatricular aluno                    
+int qtd_alunos_cadastrados(void);			// ver quantidade de alunos cadastrados   
 int entrada_dados_aluno(Aluno *novo_aluno); 
 void imprime_aluno(Aluno aluno_aux);		
 
@@ -63,7 +63,7 @@ void cadastrar_aluno_espera(void) // manipular o arquivo turmas e adicionar acr�
 				{
 					if (aux.codigo == -1)
 					{
-						fseek(arquivo_turmas, (sizeof(Turma) * -1), SEEK_CUR); // verificar funcionamento!!!
+						fseek(arquivo_turmas, (sizeof(Turma) * -1), SEEK_CUR);
 						aux.qtd_alunos++;
 						fwrite(&aux, sizeof(Turma), 1, arquivo_turmas);
 						printf("\nAluno cadastrado com sucesso na lista de espera!\n");
@@ -105,7 +105,7 @@ int entrada_dados_aluno(Aluno *novo_aluno)
 
 			if (novo_aluno->idade > 0 && novo_aluno->idade < 150)
 			{
-				printf("Turma (ou codigo de espera): ");
+				printf("Turma (ou c%cdigo de espera): ", 162);
 				fflush(stdin);
 				scanf("%d", &novo_aluno->turma);
 
@@ -122,7 +122,7 @@ int entrada_dados_aluno(Aluno *novo_aluno)
 				}
 				else
 				{
-					printf("\nTurma nao encontrada!\n");
+					printf("\nTurma n%co encontrada!\n", 198);
 					return 2;
 				}
 			}
@@ -133,7 +133,7 @@ int entrada_dados_aluno(Aluno *novo_aluno)
 			printf("\nNome inv%clido!\n", 160);
 	}
 	else
-		printf("\nMatr%ccula inv%clida ou ja existente!\n", 161, 160);
+		printf("\nMatr%ccula inv%clida ou j%c existente!\n", 161, 160, 160);
 	return 0;
 }
 
@@ -152,7 +152,7 @@ void cadastrar_aluno(void)
 			{
 				if (aux.codigo == novo_aluno.turma)
 				{
-					fseek(arquivo_turmas, (sizeof(Turma) * -1), SEEK_CUR); // verificar funcionamento!!!
+					fseek(arquivo_turmas, (sizeof(Turma) * -1), SEEK_CUR);
 					aux.qtd_alunos++;
 					fwrite(&aux, sizeof(Turma), 1, arquivo_turmas);
 					break;
@@ -181,7 +181,7 @@ void cadastrar_aluno(void)
 		}
 	}
 	else
-		printf("\nAluno nao cadastrado!\n");
+		printf("\nAluno n%co cadastrado!\n", 198);
 }
 
 void imprime_lista_espera(void)
@@ -278,7 +278,7 @@ void editar_aluno(int matricula)
 			fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
 		}
 		else
-			printf("Aluno nao encontrado!\n");
+			printf("Aluno n%co encontrado!\n", 198);
 	}
 	else
 		printf("Problema no arquivo 'Alunos.bin'\n");
@@ -343,7 +343,6 @@ void desmatricular_aluno(int matricula)
 			}
 
 		}
-
         if(aluno_foi_encontrado) //Se o aluno foi encontrado
             printf("\nAluno desmatriculado!\n"); //Informa que o aluno foi desmatriculado
 

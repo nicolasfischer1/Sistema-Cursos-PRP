@@ -39,7 +39,7 @@ int main(void)
         
         if (qtd_turmas() > 1 && validador > 0)
         {
-            
+
             printf("[10] Ver os alunos de uma turma\n");
             printf("[11] Ver todos os alunos\n");
             printf("[12] Buscar aluno pela matr%ccula\n", 161);
@@ -80,14 +80,14 @@ int main(void)
                 break;
 
             case 5:
-                printf("Codigo: ");
+                printf("C%cdigo: ", 162);
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
                 if (aux_t.codigo >= 0)
                     imprime_turma(aux_t);
                 else
-                	printf("\nTurma n encontrada\n");
+                	printf("\nTurma n%co encontrada\n", 198);
                 break;
             /* case 6:
                 editar_turma(i);
@@ -117,7 +117,7 @@ int main(void)
      switch (escolha)
             {  
                 case 10:
-                    printf("Codigo: ");
+                    printf("C%cdigo: ", 162);
                     fflush(stdin);
                     scanf("%d", &i);
                     aux_t = busca_turma(i);
@@ -128,23 +128,23 @@ int main(void)
                     imprimir_todos_alunos();
                     break;
                 case 12:
-                    printf("Matricula: ");
+                    printf("Matr%ccula: ", 161);
                     fflush(stdin);
                     scanf("%d", &i);
                     aux_a = buscar_aluno(i);
                     if (aux_a.matricula != -2)
                         imprime_aluno(aux_a);
                     else
-                        printf("Aluno nao encontrado!\n");
+                        printf("Aluno n%co encontrado!\n", 198);
                     break;
                 case 13:
-                    printf("Matricula: ");
+                    printf("Matr%ccula: ", 161);
                     fflush(stdin);
                     scanf("%d", &i);
                     editar_aluno(i);
                     break;
                 case 14:
-                    printf("Matricula: ");
+                    printf("Matr%ccula: ", 161);
                     fflush(stdin);
                     scanf("%d", &i);
                     desmatricular_aluno(i);
@@ -154,7 +154,7 @@ int main(void)
                     break;
             }
             if(escolha > 15 || escolha < 0)
-                printf("Opcao invalida!\n");
+                printf("Op%c%co inv%clida!\n", 135, 198, 160);
     }
     fflush(stdin);
     getchar();
