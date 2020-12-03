@@ -20,7 +20,7 @@ int main(void)
     	int i=0;
     	int validador = qtd_alunos_cadastrados();
     	
-        printf("Digite o n%cmero correspondente %c op%c%co desejada:\n", 163, 133, 135, 198);
+        printf("Digite o n%cmero correspondente da op%c%co desejada:\n", 163, 135, 198);
         printf("[0] Sair e encerrar o programa\n");
         printf("[1] Cadastrar nova turma\n");
         printf("[2] Cadastrar aluno na lista de espera\n");
@@ -123,6 +123,8 @@ int main(void)
                     aux_t = busca_turma(i);
                     if (aux_t.codigo >= 0)
                         imprime_alunos_turma(aux_t);
+                    else
+                        printf("N%co foi poss%cvel encontrar essa turma!\n", 198, 161);
                     break;
                 case 11:
                     imprimir_todos_alunos();
