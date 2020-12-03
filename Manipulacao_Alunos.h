@@ -263,11 +263,15 @@ void editar_aluno(int matricula)
 	if (arquivo_alunos != NULL) //  Se for possível abrir/criar o arquivo 'Alunos.bin'
 	{
 		Aluno editar = buscar_aluno(matricula);
+
 		if (editar.matricula != -2)
 		{
 			printf("***********************************\n");
 			printf("\nAluno encontrado!\n\n");
 			imprime_aluno(editar);
+
+			int turma_antiga = editar.turma;
+
 			while (1)
 			{
 				if (entrada_dados_aluno(&editar) == 1)
@@ -276,6 +280,51 @@ void editar_aluno(int matricula)
 			fseek(arquivo_alunos, sizeof(Aluno) * -1, SEEK_CUR);
 			fwrite(&editar, sizeof(Aluno), 1, arquivo_alunos);
 			fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
+
+			int turma_nova = editar.turma;
+
+            if(turma_antiga != turma_nova){
+
+                FILE *arquivo_turmas = fopen("Turmas.bin", "r+b");
+
+                if(arquivo_turmas){
+
+                    Turma turma_aux;
+
+                    while(fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)){
+
+                        if(turma_aux.codigo == turma_antiga){
+
+                            turma_aux.qtd_alunos--;
+                            fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR);
+                            fwrite(&turma_aux, sizeof(Turma), 1, arquivo_turmas);
+                            fseek(arquivo_turmas, 0, SEEK_SET);
+                            break;
+
+                        }
+
+                    }
+
+                    while(fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)){
+
+                        if(turma_aux.codigo == turma_nova){
+
+                            turma_aux.qtd_alunos++;
+                            fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR);
+                            fwrite(&turma_aux, sizeof(Turma), 1, arquivo_turmas);
+                            fseek(arquivo_turmas, 0, SEEK_SET);
+                            break;
+
+                        }
+
+                    }
+
+                    fclose(arquivo_turmas);
+
+                }else
+                    printf("Problema no arquivo 'Turmas.bin'\n");
+            }
+
 		}
 		else
 			printf("Aluno n%co encontrado!\n", 198);
@@ -301,10 +350,14 @@ void desmatricular_aluno(int matricula)
 		Aluno desmatricular; //Variável para procurar o aluno a ser desmatriculado
 		Aluno aux; //Variável para o deslocamento dos registros no arquivo
 
+        int codigo; //Variável para salvar a turma em que o aluno estava
+
 		while (fread(&desmatricular, sizeof(Aluno), 1, arquivo_a)) //Percorre o arquivo procurando pelo aluno a ser desmatriculado
 		{
 			if (desmatricular.matricula == matricula) //Se encontrar o aluno a ser desmatriculado
 			{
+
+                codigo = desmatricular.turma; //Salva a turma do aluno a ser desmatriculado
 
                 if(ftell(arquivo_a) < tamanho_maximo){ //Se o aluno não era o último do arquivo
 
@@ -334,17 +387,42 @@ void desmatricular_aluno(int matricula)
 
 				SetEndOfFile(arquivo); //Trunca o arquivo, modificando a posição de seu final
 
-                CloseHandle(arquivo); //Fecha o arquivo
+                		CloseHandle(arquivo); //Fecha o arquivo
 
 
-                aluno_foi_encontrado = 1; //Muda o estado da variável booleana para aluno encontrado
+                		aluno_foi_encontrado = 1; //Muda o estado da variável booleana para aluno encontrado
 
 				break; //Sai do escopo do while
 			}
 
 		}
-        if(aluno_foi_encontrado) //Se o aluno foi encontrado
+
+        if(aluno_foi_encontrado){ //Se o aluno foi encontrado
+
+            FILE *arquivo_turmas = fopen("Turmas.bin", "r+b"); //Abre o arquivo de turmas
+
+            Turma turma_aux; //Estrutura Turma auxiliar
+
+            while(fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)){ //Percorre o arquivo
+
+                if(turma_aux.codigo == codigo){ //Se a turma do aluno desmatriculado foi encontrada
+
+                    turma_aux.qtd_alunos--; //Decrementa a quantidade de alunos
+
+                    fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR); //Retrocede uma turma
+
+                    fwrite(&turma_aux, sizeof(Turma), 1, arquivo_turmas); //Sobrescreve os dados da turma
+
+                    fclose(arquivo_turmas); //Fecha o arquivo
+
+                    break; //Sai do laço
+
+                }
+
+            }
+
             printf("\nAluno desmatriculado!\n"); //Informa que o aluno foi desmatriculado
+        }
 
         else{ //Se o aluno não foi encontrado
             printf("\nAluno n%co encontrado!\n", 198); //Informa que o aluno não foi encontrado
