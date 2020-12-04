@@ -26,17 +26,23 @@ Aluno buscar_aluno(int matricula)
 	if (arquivo_alunos != NULL) //  Se for possível abrir/criar o arquivo 'Alunos.bin'
 	{
 		Aluno buscar;
+		
 		while (fread(&buscar, sizeof(Aluno), 1, arquivo_alunos) == 1)
 		{
-			if (matricula == buscar.matricula)
+			if (matricula == buscar.matricula){
+                		fclose(arquivo_alunos);
 				return buscar;
+			}
 		}
+		
 		buscar.matricula = -2;
 		fclose(arquivo_alunos);
-		return buscar;
+		return buscar
+		
 	}
 	else
 		printf("Problema no arquivo 'Alunos.bin'\n");
+
 }
 
 void cadastrar_aluno_espera(void) // manipular o arquivo turmas e adicionar acréscimo do aluno na lista de espera!!!
@@ -305,6 +311,8 @@ void editar_aluno(int matricula)
 
                     }
 
+		    fseek(arquivo_turmas, 0, SEEK_SET);
+
                     while(fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)){
 
                         if(turma_aux.codigo == turma_nova){
@@ -331,12 +339,14 @@ void editar_aluno(int matricula)
 	}
 	else
 		printf("Problema no arquivo 'Alunos.bin'\n");
+	
+	fclose(arquivo_alunos);
 }
 
 void desmatricular_aluno(int matricula)
 {
 
-	FILE *arquivo_a = fopen("Alunos.bin", "r+b"); //  Abre/Cria o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
+	FILE *arquivo_a = fopen("Alunos.bin", "r+b"); //  Abre/Cria o arquivo 'Alunos.bin' "r+b"(abertura para leitura e escrita de dados)
 
 	int aluno_foi_encontrado = 0; //Variável booleana para aluno encontrado
 
