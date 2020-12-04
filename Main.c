@@ -14,40 +14,37 @@ int main(void)
     if (aux_t.codigo != -1)
         cria_lista_espera();
 
-    
     while (1)
     {
-    	int i=0;
-    	int validador = qtd_alunos_cadastrados();
-    	
-        printf("Digite o n%cmero correspondente da op%c%co desejada:\n", 163, 135, 198);
+        int i = 0;
+        int validador = qtd_alunos_cadastrados();
+
+        printf("Digite a op%c%co desejada:\n", 135, 198);
         printf("[0] Sair e encerrar o programa\n");
-        printf("[1] Cadastrar nova turma\n");
+        printf("[1] Cadastrar turma\n");
         printf("[2] Cadastrar aluno na lista de espera\n");
         printf("[3] Ver lista de espera\n");
 
         if (qtd_turmas() > 1)
         {
-            printf("[4] Ver todas as turmas\n");
+            printf("[4] Ver dados das turmas\n");
             printf("[5] Buscar turma\n");
             printf("[6] Editar turma\n");
             printf("[7] Excluir turma\n");
-            printf("[8] Ver quantidade de turmas cadastradas\n");
+            printf("[8] Quantidade de turmas cadastradas\n");
             printf("[9] Cadastrar aluno\n");
         }
 
-        
         if (qtd_turmas() > 1 && validador > 0)
         {
 
-            printf("[10] Ver os alunos de uma turma\n");
+            printf("[10] Ver os alunos por turma\n");
             printf("[11] Ver todos os alunos\n");
-            printf("[12] Buscar aluno pela matr%ccula\n", 161);
-            printf("[13] Editar dados de um aluno\n");
+            printf("[12] Buscar aluno\n");
+            printf("[13] Editar aluno\n");
             printf("[14] Desmatricular aluno\n");
-            printf("[15] Ver quantidade de alunos cadastrados\n");
+            printf("[15] Quantidade de alunos cadastrados\n");
         }
-
 
         fflush(stdin);
         scanf("%d", &escolha);
@@ -74,7 +71,7 @@ int main(void)
 
             switch (escolha)
             {
-            
+
             case 4:
                 imprime_todas_turmas();
                 break;
@@ -87,7 +84,7 @@ int main(void)
                 if (aux_t.codigo >= 0)
                     imprime_turma(aux_t);
                 else
-                	printf("\nTurma n%co encontrada\n", 198);
+                    printf("\nTurma n%co encontrada\n", 198);
                 break;
             /* case 6:
                 editar_turma(i);
@@ -101,66 +98,64 @@ int main(void)
                     excluir_turma(i);
                 break;*/
             case 8:
-                printf("Ha %d turma(s)!\n", qtd_turmas()-1);
+                printf("Ha %d turma(s)!\n", qtd_turmas() - 1);
                 break;
 
             case 9:
                 cadastrar_aluno();
                 break;
-            
             }
         }
 
-    
-     if (qtd_turmas() > 1 && validador > 0)
-     {
-     switch (escolha)
-            {  
-                case 10:
-                    printf("C%cdigo: ", 162);
-                    fflush(stdin);
-                    scanf("%d", &i);
-                    aux_t = busca_turma(i);
-                    if (aux_t.codigo >= 0)
-                        imprime_alunos_turma(aux_t);
-                    else
-                        printf("N%co foi poss%cvel encontrar essa turma!\n", 198, 161);
-                    break;
-                case 11:
-                    imprimir_todos_alunos();
-                    break;
-                case 12:
-                    printf("Matr%ccula: ", 161);
-                    fflush(stdin);
-                    scanf("%d", &i);
-                    aux_a = buscar_aluno(i);
-                    if (aux_a.matricula != -2)
-                        imprime_aluno(aux_a);
-                    else
-                        printf("Aluno n%co encontrado!\n", 198);
-                    break;
-                case 13:
-                    printf("Matr%ccula: ", 161);
-                    fflush(stdin);
-                    scanf("%d", &i);
-                    editar_aluno(i);
-                    break;
-                case 14:
-                    printf("Matr%ccula: ", 161);
-                    fflush(stdin);
-                    scanf("%d", &i);
-                    desmatricular_aluno(i);
-                    break;
-                case 15:
-                    printf("Ha %d alunos cadastrados (incluindo os da lista de espera)!\n", qtd_alunos_cadastrados());
-                    break;
+        if (qtd_turmas() > 1 && validador > 0)
+        {
+            switch (escolha)
+            {
+            case 10:
+                printf("C%cdigo: ", 162);
+                fflush(stdin);
+                scanf("%d", &i);
+                aux_t = busca_turma(i);
+                if (aux_t.codigo >= 0)
+                    imprime_alunos_turma(aux_t);
+                else
+                    printf("N%co foi poss%cvel encontrar essa turma!\n", 198, 161);
+                break;
+            case 11:
+                imprimir_todos_alunos();
+                break;
+            case 12:
+                printf("Matr%ccula: ", 161);
+                fflush(stdin);
+                scanf("%d", &i);
+                aux_a = buscar_aluno(i);
+                if (aux_a.matricula != -2)
+                    imprime_aluno(aux_a);
+                else
+                    printf("Aluno n%co encontrado!\n", 198);
+                break;
+            case 13:
+                printf("Matr%ccula: ", 161);
+                fflush(stdin);
+                scanf("%d", &i);
+                editar_aluno(i);
+                break;
+            case 14:
+                printf("Matr%ccula: ", 161);
+                fflush(stdin);
+                scanf("%d", &i);
+                desmatricular_aluno(i);
+                break;
+            case 15:
+                printf("Ha %d alunos cadastrados (incluindo os da lista de espera)!\n", qtd_alunos_cadastrados());
+                break;
             }
-            if(escolha > 15 || escolha < 0)
+            if (escolha > 15 || escolha < 0)
                 printf("Op%c%co inv%clida!\n", 135, 198, 160);
+        }
+        fflush(stdin);
+        getchar();
+        system("cls");
     }
-    fflush(stdin);
-    getchar();
-    system("cls");
-}
     return 0;
 }

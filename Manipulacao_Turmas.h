@@ -160,7 +160,7 @@ void cria_lista_espera(void)
     {
         Turma nova_turma; //  Criando registro temporário (visível apenas dentro desta condicional)
         nova_turma.codigo = -1;
-        nova_turma.qtd_alunos = 0;                             //  Inicializa a quantidade de alunos da turma com 0;
+        nova_turma.qtd_alunos = 0; //  Inicializa a quantidade de alunos da turma com 0;
         nova_turma.qtd_limite = nova_turma.qtd_alunos + 1;
         fwrite(&nova_turma, sizeof(Turma), 1, arquivo_turmas); //  "Escreve" o registro dentro do arquivo
         fclose(arquivo_turmas);
