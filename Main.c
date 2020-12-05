@@ -19,7 +19,9 @@ int main(void)
         int i = 0;
         int validador = qtd_alunos_cadastrados();
 
-        printf("Digite a op%c%co desejada:\n", 135, 198);
+        printf("\n________________SISTEMA DE CURSOS______________\n");
+        printf("\nTecle '-1' para saber mais sobre este programa!");
+        printf("\nOu digite a op%c%co desejada:\n\n", 135, 198);
         printf("[0] Sair e encerrar o programa\n");
         printf("[1] Cadastrar turma\n");
         printf("[2] Cadastrar aluno na lista de espera\n");
@@ -51,6 +53,9 @@ int main(void)
 
         switch (escolha)
         {
+        case -1:
+            printf("Que bom que quer saber sobre n%cs =)\nEsse %c um projeto acad%cmico da disciplina de Programa%c%co para Resolu%c%co de Problemas (2/2020 da UNISC).\nDesenvolvido pelo Nicolas Fischer, Patrick Priebe e Bruno Bolzan; e orientado pelo Prof. Ivan S.\nO mesmo consiste num sistema de cursos onde pode-se manipular de variadas formas as turmas e alunos!\nS%co utilizadas estruturas de registro com grava%c%co dos dados em arquivos bin%crios (.bin).\nTamb%cm %c empregado conceitos das estruturas de dados como: listas lineares, filas e pilhas (n%co encadeadas).\nLinguagem: C 99.\n", 162, 130, 136, 135, 198, 135, 198, 198, 135, 198, 160, 130, 130, 198);
+            break;
         case 0:
             printf("\nAt%c logo!!\n", 130);
             Sleep(5);
@@ -150,9 +155,10 @@ int main(void)
                 printf("Ha %d alunos cadastrados (incluindo os da lista de espera)!\n", qtd_alunos_cadastrados());
                 break;
             }
-            if (escolha > 15 || escolha < 0)
-                printf("Op%c%co inv%clida!\n", 135, 198, 160);
         }
+        if (escolha > 15 || escolha < -1)
+            printf("Op%c%co inv%clida!\n", 135, 198, 160);
+
         fflush(stdin);
         getchar();
         system("cls");
