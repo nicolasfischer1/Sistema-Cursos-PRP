@@ -62,6 +62,7 @@ int main(void)
             exit(1);
         case 1:
             cadastro_turma();
+            atualizar_lista_espera();
             break;
         case 2:
             cadastrar_aluno_espera();
@@ -150,6 +151,7 @@ int main(void)
                 fflush(stdin);
                 scanf("%d", &i);
                 desmatricular_aluno(i);
+                atualizar_lista_espera();
                 break;
             case 15:
                 printf("Ha %d alunos cadastrados (incluindo os da lista de espera)!\n", qtd_alunos_cadastrados());
