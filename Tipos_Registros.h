@@ -1,8 +1,8 @@
 /**
- * Arquivo com código-fonte de uma biblioteca: "Tipos_Registros.h".
- * Definição das estruturas de registro e tipos de variáveis criadas com base nelas.
+ * Arquivo com cÃ³digo-fonte de uma biblioteca: "Tipos_Registros.h".
+ * DefiniÃ§Ã£o das estruturas de registro e tipos de variÃ¡veis criadas com base nelas.
  * Criado em: 29/10/2020.
- * Última modificação por Nicolas Fischer no dia 29/10/2020.
+ * Ãšltima modificaÃ§Ã£o por Nicolas Fischer no dia 29/10/2020.
 */
 
 struct aluno //  Estrutura (registro) "aluno"
@@ -18,7 +18,7 @@ struct turma //   Estrutura (registro) "turma"
 {
     int codigo;
     wchar_t curso[60];
-    wchar_t turno; // [M] para manhã; [T] para tarde; [N] para noite
+    wchar_t turno; // [M] para manhÃ£; [T] para tarde; [N] para noite
     int qtd_alunos;
     int qtd_limite;
 };

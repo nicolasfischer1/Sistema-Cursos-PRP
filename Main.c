@@ -8,6 +8,7 @@ int main(void)
 {
     int escolha;
     Aluno aux_a;
+    
     //  Caso nao tenha sido criada a lista de espera
     Turma aux_t;
     aux_t = busca_turma(-1);
