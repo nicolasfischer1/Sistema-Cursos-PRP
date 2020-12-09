@@ -149,7 +149,7 @@ void imprime_turma(Turma aux)
 */
 void imprime_todas_turmas(void)
 {
-    if (qtd_turmas() > 0)
+    if (qtd_turmas_cadastradas() > 0)
     {
         FILE *arquivo_turmas = fopen("Turmas.bin", "rb");
         if (arquivo_turmas)
