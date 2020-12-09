@@ -1,8 +1,8 @@
 /**
- * Arquivo com código-fonte de uma biblioteca: "Tipos_Registros.h".
+ * Biblioteca "Tipos_Registros.h".
  * Definição das estruturas de registro e tipos de variáveis criadas com base nelas.
  * Criado em: 29/10/2020.
- * Última modificação por Nicolas Fischer no dia 29/10/2020.
+ * Última modificação por Nicolas Fischer no dia 08/10/2020.
 */
 
 struct aluno //  Estrutura (registro) "aluno"
@@ -14,11 +14,11 @@ struct aluno //  Estrutura (registro) "aluno"
     int aux;
 };
 
-struct turma //   Estrutura (registro) "turma"
+struct turma //   Estrutura (registro) "turma"      // Lista de espera é um tipo especial de turma, na qual tem código lógico para encontro, que é igual a -1.
 {
     int codigo;
     wchar_t curso[60];
-    wchar_t turno; // [M] para manhã; [T] para tarde; [N] para noite
+    wchar_t turno; // [m] para manhã; [t] para tarde; [n] para noite
     int qtd_alunos;
     int qtd_limite;
 };

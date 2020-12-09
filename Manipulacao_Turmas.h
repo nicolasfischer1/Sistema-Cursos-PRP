@@ -1,7 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
+/**
+ * Biblioteca "Manipulacao_Turmas.h".
+ * Implementação das funções que tratam da manipulação e curadoria dos dados das turmas.
+ * Criado em: 29/10/2020.
+ * Última modificação por Nicolas Fischer no dia 08/12/2020.
+*/
 
-#include "Tipos_Registros.h"
+// Inclusão de bibliotecas padrões da linguagem
+#include <stdio.h>  // Biblioteca padrão de entrada e saída
+#include <stdlib.h> // Biblioteca padrão para manipulação de memória com uso dinâmico
+
+#include "Tipos_Registros.h" // Inclusão da biblioteca interna (criada para o projeto)
+                             // Trás os dados primitivos e definição de registros e tipos
 
 //  Protótipos das funções
 int entrada_dados_turma(Turma *nova_turma);
@@ -10,8 +19,14 @@ int cadastro_turma(void);
 void cria_lista_espera(void);
 void imprime_turma(Turma aux);
 void imprime_todas_turmas(void);
-int qtd_turmas(void);
+int qtd_turmas_cadastradas(void);
 
+/**
+* Função que preenche dados de uma turma, como entrada, fazendo todas as validações necessárias.
+* Entrada (parâmetro(s)): <Turma *nova_turma> é a turma que receberá os dados captados (em ponteiro).
+* Saída (retorno(s)): <int>, 0 para validação falsa, 1 para validação verdadeira.
+* Saída: Serve como atribuição de retorno lógico.
+*/
 int entrada_dados_turma(Turma *nova_turma)
 {
     //  Questionando o usuário as informações da turma, limpando buffer do teclado, lendo e armazenando-as no registro passado como parâmetro
@@ -34,7 +49,13 @@ int entrada_dados_turma(Turma *nova_turma)
         printf("Quantidade limite de alunos: ");
         fflush(stdin);
         scanf("%d", &nova_turma->qtd_limite);
-        return 1;
+        if (nova_turma->qtd_limite > 0)
+            return 1;
+        else
+        {
+            printf("\nQuantidade insuportada!\n");
+            return 0;
+        }
     }
     else
     {
@@ -43,6 +64,12 @@ int entrada_dados_turma(Turma *nova_turma)
     }
 }
 
+/**
+* Função que cadastra uma nova turma, incluíndo-a no arquivo correspondente.
+* Entrada (parâmetro(s)): <void> sem parâmetro válido, pois modifica direto componentes específicos.
+* Saída (retorno(s)): <int>, 0 para validação falsa, 1 para validação verdadeira.
+* Saída: Serve como atribuição de retorno lógico.
+*/
 int cadastro_turma(void)
 {
     FILE *arquivo_turmas = fopen("Turmas.bin", "a+b"); //  Abre/Cria o arquivo 'Turmas.bin' e posiciona o ponteiro no final dele (abertura para gravação de dados)
@@ -68,6 +95,11 @@ int cadastro_turma(void)
     }
 }
 
+/**
+* Função que imprime uma turma em formatação já tabelada, mas sem cabeçalho indicando os dados.
+* Entrada (parâmetro(s)): <Turma aux> é a turma na qual os dados serão impressos.
+* Saída (retorno(s)): <void> sem retorno.
+*/
 void imprime_turma(Turma aux)
 {
 
@@ -76,9 +108,14 @@ void imprime_turma(Turma aux)
     printf("Alunos na turma: %d\t Limite de alunos: %d\n", aux.qtd_alunos, aux.qtd_limite);
 }
 
+/**
+* Função que imprime todas as turmas cadastradas, exceto a lista de espera (que é um tipo especial de turma).
+* Entrada (parâmetro(s)): <void> sem parâmetro válido, pois acessa direto componentes específicos.
+* Saída (retorno(s)): <void> sem retorno.
+*/
 void imprime_todas_turmas(void)
 {
-    if (qtd_turmas() > 0)
+    if (qtd_turmas_cadastradas() > 0)
     {
         FILE *arquivo_turmas = fopen("Turmas.bin", "rb");
         if (arquivo_turmas)
@@ -104,6 +141,12 @@ void imprime_todas_turmas(void)
     }
 }
 
+/**
+* Função que busca uma turma na base de dados.
+* Entrada (parâmetro(s)): <int> é o código da turma, um número inteiro
+* Saída (retorno(s)): retorna uma variável do tipo <Turma> (registro) com o que foi encontrado.
+* Saída: Caso não encontre a turma, irá retornar registro com código de marcação lógica igual a -2.
+*/
 Turma busca_turma(int aux)
 {
     FILE *arquivo_turmas = fopen("Turmas.bin", "rb");
@@ -130,7 +173,13 @@ Turma busca_turma(int aux)
     }
 }
 
-int qtd_turmas(void)
+/**
+* Função que conta a quantidade de turmas cadastradas, fora a lista de espera (que é um tipo especial de turma).
+* Entrada (parâmetro(s)): <void> sem parâmetro válido, pois acessa direto componentes específicos.
+* Saída (retorno(s)): <int> é o número de turmas contabilizado.
+* Saída: Caso não encontre a turma, irá retornar registro com código de marcação lógica igual a -2.
+*/
+int qtd_turmas_cadastradas(void)
 {
     FILE *arquivo_turmas = fopen("Turmas.bin", "rb");
     int contador = 0;
@@ -151,6 +200,11 @@ int qtd_turmas(void)
     }
 }
 
+/**
+* Função que cria a lista de espera (tipo especial de turma) na qual tem código igual a -1.
+* Entrada (parâmetro(s)): <void> sem parâmetro válido, pois acessa direto componentes específicos.
+* Saída (retorno(s)):  <void> sem retorno.
+*/
 void cria_lista_espera(void)
 
 {
