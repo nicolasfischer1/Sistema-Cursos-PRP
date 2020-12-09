@@ -1,5 +1,5 @@
 /**
- * Programa princiapl, arquivo com código fonte principal "Main.c".
+ * Programa principal, arquivo com código fonte principal "Main.c".
  * Implementação das funções que tratam da manipulação e curadoria dos dados das turmas.
  * Criado em: 29/10/2020.
  * Última modificação por Nicolas Fischer no dia 08/12/2020.
@@ -11,8 +11,8 @@
 #include <windows.h> // Biblioteca padrão do Windows
 
 #include "Manipulacao_Alunos.h" // Inclusão da biblioteca interna (criada para o projeto)
-                                // Trás as funções de manipulação dos alunos
-                                // As demais importações iforam feitas nesta biblioteca, sendo nescessário refazer.
+                                // Traz as funções de manipulação dos alunos
+                                // As demais importações foram feitas nessa biblioteca, sendo nescessário refazer.
 
 /**
 * Função que possui o menu que exibe as opções de escolha ao usuário, captura a escolha e executa as funções.
@@ -76,7 +76,7 @@ int main(void)
         switch (escolha)    // Estrutura de condição, evita ambiguidade na visibilidade das opções, ocorre todas as hipóteses
         {
         case -1:    // Rotina sobre
-            printf("Que bom que quer saber sobre n%cs =)\nEsse %c um projeto acad%cmico da disciplina de Programa%c%co para Resolu%c%co de Problemas (2/2020 da UNISC).\nDesenvolvido pelo Nicolas Fischer, Patrick Priebe e Bruno Bolzan; e orientado pelo Prof. Ivan S.\nO mesmo consiste num sistema de cursos onde pode-se manipular de variadas formas as turmas e alunos!\nS%co utilizadas estruturas de registro com grava%c%co dos dados em arquivos bin%crios (.bin).\nTamb%cm %c empregado conceitos das estruturas de dados como: listas lineares, filas e pilhas (n%co encadeadas).\nLinguagem: C 99.\n", 162, 130, 136, 135, 198, 135, 198, 198, 135, 198, 160, 130, 130, 198);
+            printf("Que bom que quer saber sobre n%cs =)\nEsse %c um projeto acad%cmico da disciplina de Programa%c%co para Resolu%c%co de Problemas (2/2020 da UNISC).\nDesenvolvido pelo Nicolas Fischer, Patrick Priebe e Bruno Bolzan; e orientado pelo Prof. Ivan S.\nO mesmo consiste num sistema de cursos onde se pode manipular de variadas formas as turmas e alunos!\nS%co utilizadas estruturas de registro com grava%c%co dos dados em arquivos bin%crios (.bin).\nTamb%cm s%co empregados conceitos das estruturas de dados como: listas lineares, filas e pilhas (n%co encadeadas).\nLinguagem: C 99.\n", 162, 130, 136, 135, 198, 135, 198, 198, 135, 198, 160, 130, 198, 198);
             break;
         case 0: // Rotina saída
             printf("\nAt%c logo!!\n", 130);
@@ -152,7 +152,7 @@ int main(void)
             }
         }
 
-        if (qtd_turmas > 1 && qtd_alunos > 0)   //Se tiver houver ao menos um aluno e ao menos uma turma
+        if (qtd_turmas > 1 && qtd_alunos > 0)   //Se houver ao menos um aluno e ao menos uma turma
         {
             switch (escolha)    // Estrutura de condição, evita ambiguidade na visibilidade das opções
             {
