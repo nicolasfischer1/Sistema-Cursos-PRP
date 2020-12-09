@@ -111,22 +111,35 @@ int main(void)
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
-                if (aux_t.codigo >= 0)
+                if (aux_t.codigo >= 0){
+                    imprime_cabecalho_turma();
                     imprime_turma(aux_t);
+                    imprime_fim_tabela_turma();
+                }
                 else
                     printf("\nTurma n%co encontrada\n", 198);
                 break;
-            /* case 6:  // Rotina editar turma
-                editar_turma(i);
-                break;*/
-            /*case 7:   // Rotina excluir turma
+              case 6: // Rotina editar dados de uma turma
+                printf("Digite o codigo da turma que deseja editar: ");
+                fflush(stdin);
+                scanf("%d", &i);
+                aux_t = busca_turma(i);
+                if (aux_t.codigo >= 0)
+                    editar_turma(i);
+                else
+                    printf("Turma n%co encontrada.\n", 198);
+                break;
+                break;
+            case 7: // Rotina exclui uma turma
                 printf("Digite o codigo da turma que deseja excluir: ");
                 fflush(stdin);
                 scanf("%d", &i);
-                aux = busca_turma(i);
-                if (aux.codigo >= 0)
+                aux_t = busca_turma(i);
+                if (aux_t.codigo >= 0)
                     excluir_turma(i);
-                break;*/
+                else
+                    printf("Turma n%co encontrada.\n", 198);
+                break;
             case 8: // Rotina quantidade de turmas
                 printf("Ha %d turma(s)!\n", qtd_turmas - 1);
                 break;
@@ -161,8 +174,17 @@ int main(void)
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_a = buscar_aluno(i);
-                if (aux_a.matricula != -2)
-                    imprime_aluno(aux_a);
+                if (aux_a.matricula != -2){
+
+                    puts("\n");
+
+                    imprime_cabecalho_aluno();
+
+                    imprime_aluno(aux_a, 0);
+
+                    imprime_fim_tabela_aluno();
+
+                }
                 else
                     printf("Aluno n%co encontrado!\n", 198);
                 break;
