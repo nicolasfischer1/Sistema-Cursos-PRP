@@ -115,13 +115,13 @@ int main(void)
                 if (aux_t.codigo >= 0){
                     imprime_cabecalho_turma();
                     imprime_turma(aux_t);
-                    imprime_fim_tabela_turma();
+                    imprime_fim_turma();
                 }
                 else
                     printf("\nTurma n%co encontrada\n", 198);
                 break;
               case 6: // Rotina editar dados de uma turma
-                printf("Digite o codigo da turma que deseja editar: ");
+                printf("Digite o c%cdigo da turma que deseja editar: ", 162);
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
@@ -130,9 +130,8 @@ int main(void)
                 else
                     printf("Turma n%co encontrada.\n", 198);
                 break;
-                break;
             case 7: // Rotina exclui uma turma
-                printf("Digite o codigo da turma que deseja excluir: ");
+                printf("Digite o c%cdigo da turma que deseja excluir: ", 162);
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
@@ -183,7 +182,7 @@ int main(void)
 
                     imprime_aluno(aux_a, 0);
 
-                    imprime_fim_tabela_aluno();
+                    imprime_fim_aluno();
 
                 }
                 else
