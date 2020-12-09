@@ -19,7 +19,6 @@ void imprime_aluno(Aluno aluno_aux, int escolha);
 void atualizar_lista_espera(void); // atualizar a lista de espera
 void imprime_cabecalho_aluno(void);
 void imprime_fim_aluno(void);
-void imprime_fim_tabela_aluno(void);
 
 Aluno buscar_aluno(int matricula)
 {
@@ -199,46 +198,44 @@ void imprime_lista_espera(void)
 		{
 			Aluno aluno_espera;
 
-			int havia_aluno = 0;
+            fseek(arquivo_alunos, 0, SEEK_END);
 
-            		fseek(arquivo_alunos, 0, SEEK_END);
+            int tamanho_maximo = ftell(arquivo_alunos);
 
-            		int tamanho_maximo = ftell(arquivo_alunos);
-
-            		fseek(arquivo_alunos, 0, SEEK_SET);
+            fseek(arquivo_alunos, 0, SEEK_SET);
 
 			puts("\n");
 
-            		imprime_cabecalho_aluno();
+            imprime_cabecalho_aluno();
 
 			while (fread(&aluno_espera, sizeof(Aluno), 1, arquivo_alunos) == 1)
 			{ //  Vai rodar enquanto ela conseguir retornar uma linha válida
 				if (aluno_espera.turma == -1){
 
-                    			havia_aluno = 1;
-
 					imprime_aluno(aluno_espera, 1);
 
-                    		if(ftell(arquivo_alunos) == tamanho_maximo)
-                        		break;
+                    if(ftell(arquivo_alunos) == tamanho_maximo)
+                        break;
 
-                    		imprime_fim_aluno();
+                    imprime_fim_aluno();
 				}
 
 			}
 
-		if(havia_aluno)
-                imprime_fim_tabela_aluno();
+			imprime_fim_aluno();
 
-	 	Turma verificador = busca_turma(-1);
-		if (verificador.qtd_alunos == 0)
-			printf("\nLista de espera vazia\n");
+			Turma verificador = busca_turma(-1);
+			if (verificador.qtd_alunos == 0)
+				printf("\nLista de espera vazia\n");
 			fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
-		}else
+		}
+		else
 			printf("Problema no arquivo 'Alunos.bin'\n");
 	}
 	else
+	{
 		printf("\nLista de espera vazia!\n");
+	}
 }
 
 void imprimir_todos_alunos(void)
@@ -250,39 +247,40 @@ void imprimir_todos_alunos(void)
 	{
 		Aluno todos_alunos;
 
-        	fseek(arquivo_alunos, 0, SEEK_END);
+        fseek(arquivo_alunos, 0, SEEK_END);
 
-        	int tamanho_total = ftell(arquivo_alunos);
+        int tamanho_total = ftell(arquivo_alunos);
 
-        	fseek(arquivo_alunos, 0, SEEK_SET);
+        fseek(arquivo_alunos, 0, SEEK_SET);
 
 		if(fread(&todos_alunos, sizeof(Aluno), 1, arquivo_alunos)){
 
-            		puts("\n");
+            puts("\n");
 
-            		imprime_cabecalho_aluno();
+            imprime_cabecalho_aluno();
 
-            		fseek(arquivo_alunos, 0, SEEK_SET);
+            fseek(arquivo_alunos, 0, SEEK_SET);
 
-            		while (fread(&todos_alunos, sizeof(Aluno), 1, arquivo_alunos) == 1)
-            		{ //  Vai rodar enquanto ela conseguir retornar uma linha válida
+            while (fread(&todos_alunos, sizeof(Aluno), 1, arquivo_alunos) == 1)
+            { //  Vai rodar enquanto ela conseguir retornar uma linha válida
 
-                		imprime_aluno(todos_alunos, 0);
+                imprime_aluno(todos_alunos, 0);
 
-                		if(ftell(arquivo_alunos) == tamanho_total)
-                    			break;
+                if(ftell(arquivo_alunos) == tamanho_total)
+                    break;
 
-                		imprime_fim_aluno();
+                imprime_fim_aluno();
 
-            		}
+            }
 
-            		imprime_fim_tabela_aluno();
+            imprime_fim_aluno();
 
 		}else
-            		printf("\nN%co h%c alunos!\n", 198, 160);
+            printf("\nN%co h%c alunos!\n", 198, 160);
 
 		fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
-	}else
+	}
+	else
 		printf("Problema no arquivo 'Alunos.bin'\n");
 }
 
@@ -295,41 +293,35 @@ void imprime_alunos_turma(Turma aux)
 	{ //  Se for possível abrir/criar o arquivo 'Alunos.bin'
 		Aluno aluno_turma;
 
-        	fseek(arquivo_alunos, 0, SEEK_END);
+        fseek(arquivo_alunos, 0, SEEK_END);
 
-        	int tamanho_total = ftell(arquivo_alunos);
+        fseek(arquivo_alunos, 0, SEEK_SET);
 
-        	fseek(arquivo_alunos, 0, SEEK_SET);
+        Turma auxiliar = busca_turma(aux.codigo);
 
-        	Turma auxiliar = busca_turma(aux.codigo);
+		if(auxiliar.codigo != -2 && auxiliar.qtd_alunos > 0){
 
-		if(auxiliar.codigo != -2){
+            puts("\n");
 
-            		puts("\n");
-
-            		imprime_cabecalho_aluno();
+            imprime_cabecalho_aluno();
 
 		}
 
 		fseek(arquivo_alunos, 0, SEEK_SET);
 
-        	while (fread(&aluno_turma, sizeof(Aluno), 1, arquivo_alunos))
+        while (fread(&aluno_turma, sizeof(Aluno), 1, arquivo_alunos))
 		{ //  Vai rodar enquanto ela conseguir retornar uma linha válida
 			if (aux.codigo == aluno_turma.turma)
 				imprime_aluno(aluno_turma, 0);
-            		else
-                		continue;
+            else
+                continue;
 
-            		if(ftell(arquivo_alunos) == tamanho_total)
-                		break;
-
-            		imprime_fim_aluno();
+            imprime_fim_aluno();
 		}
 
-		//imprime_fim_tabela();
-
 		fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
-	}else
+	}
+	else
 		printf("Problema no arquivo 'Alunos.bin'\n");
 }
 
@@ -349,13 +341,11 @@ void editar_aluno(int matricula)
 
 			puts("\n");
 
-            		imprime_cabecalho_aluno();
+            imprime_cabecalho_aluno();
 
 			imprime_aluno(editar, 0);
 
-            		imprime_fim_tabela_aluno();
-
-            		puts("\n");
+            puts("\n");
 
 			int turma_antiga = editar.turma;
 
@@ -364,7 +354,7 @@ void editar_aluno(int matricula)
 				if (entrada_dados_aluno(&editar) == 1)
 					break;
 			}
-			
+
 			fseek(arquivo_alunos, sizeof(Aluno) * -1, SEEK_CUR);
 			fwrite(&editar, sizeof(Aluno), 1, arquivo_alunos);
 			fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
@@ -412,6 +402,7 @@ void editar_aluno(int matricula)
 					}
 
 					fclose(arquivo_turmas);
+					printf("Aluno editado e turma atualizada!\n");
 				}
 				else
 					printf("Problema no arquivo 'Turmas.bin'\n");
@@ -525,8 +516,6 @@ void desmatricular_aluno(int matricula)
 	else											  //Se não foi possível abrir ou criar o arquivo
 		printf("Problema no arquivo 'Alunos.bin'\n"); //Informa o problema
 }
-
-
 
 int qtd_alunos_cadastrados(void)
 {
@@ -733,27 +722,6 @@ void imprime_fim_aluno(void){
     }
 
     putchar(185);
-    putchar(10);
-
-}
-
-void imprime_fim_tabela_aluno(void){
-
-    putchar(186);
-    putchar(10);
-
-    putchar(200);
-
-    for(int i = 0; i < 72; i++){
-
-        if(i != 11 && i != 56 && i != 64)
-            putchar(205);
-        else
-            putchar(202);
-
-    }
-
-    putchar(188);
     putchar(10);
 
 }
