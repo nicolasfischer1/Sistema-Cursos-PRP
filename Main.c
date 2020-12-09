@@ -26,7 +26,7 @@ int main(void)
     Turma aux_t;
 
     //  Caso nao tenha sido criada a lista de espera
-    aux_t = busca_turma(-1);
+    aux_t = busca_turma(-1);    // Buscando turma especial (lista de espera)
     if (aux_t.codigo != -1) // Caso não encontre a lista de espera (turma especial, com código -1)
         cria_lista_espera(); // É criada a lista de espera (inicializado os atributos)
 
@@ -37,6 +37,7 @@ int main(void)
         int i = 0;
 
         // Variável auxiliar que guarda a quantidade de alunos
+        // Evita que a função seja chamada mais de uma vez em verificações naquele instante do laço
         int qtd_alunos = qtd_alunos_cadastrados();
         int qtd_turmas = qtd_turmas_cadastradas();
 
