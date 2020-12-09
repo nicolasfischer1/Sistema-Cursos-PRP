@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <windows.h>
 
 #include "Manipulacao_Turmas.h"
@@ -16,7 +15,7 @@ void editar_aluno(int matricula);		 // editar dados de um aluno
 void desmatricular_aluno(int matricula); // desmatricular aluno
 int qtd_alunos_cadastrados(void);		 // ver quantidade de alunos cadastrados
 int entrada_dados_aluno(Aluno *novo_aluno);
-void imprime_aluno(Aluno aluno_aux);
+void imprime_aluno(Aluno aluno_aux, int escolha);
 void atualizar_lista_espera(void); // atualizar a lista de espera
 void imprime_cabecalho_aluno(void);
 void imprime_fim_aluno(void);
