@@ -35,37 +35,41 @@ void imprime_fim_turma(void);
 */
 int entrada_dados_turma(Turma *nova_turma)
 {
-    //  Questionando o usuário as informações da turma, limpando buffer do teclado, lendo e armazenando-as no registro passado como parâmetro
-    printf("C%cdigo: ", 162);
-    fflush(stdin);
-    scanf("%d", &nova_turma->codigo);
+    printf("C%cdigo: ", 162);         // Questionando código
+    fflush(stdin);                    // Limpando buffer do teclado
+    scanf("%d", &nova_turma->codigo); // Armazenando código na variável de parâmetro
 
-    Turma validador = busca_turma((*nova_turma).codigo);
+    Turma validador = busca_turma((*nova_turma).codigo); // Declaração e inicialização de variável auxiliar que busca uma possível turma com o código existente
 
-    if ((validador.codigo != nova_turma->codigo) && (nova_turma->codigo >= 0))
+    if ((validador.codigo != nova_turma->codigo) && (nova_turma->codigo >= 0)) // Caso não exista turma com esse código e nem ele seja menor que zero (0)
     {
-        printf("Curso: ");
-        fflush(stdin);
-        wscanf(L"%ls", &nova_turma->curso);
+        printf("Curso: ");                  // Questiona curso
+        fflush(stdin);                      // Limpando buffer do teclado
+        wscanf(L"%ls", &nova_turma->curso); // Armazenando curso na variável de parâmetro
 
-        printf("Turno:\n[m] para manh%c\n[t] para tarde\n[n] para noite\n>> ", 198);
-        fflush(stdin);
-        wscanf(L"%lc", &nova_turma->turno);
-        if(nova_turma->turno == 'm' || nova_turma->turno == 't' || nova_turma->turno == 'n'){
-            printf("Quantidade limite de alunos: ");
-            fflush(stdin);
-            scanf("%d", &nova_turma->qtd_limite);
-            return 1;
-        }else{
+        printf("Turno:\n[m] para manh%c\n[t] para tarde\n[n] para noite\n>> ", 198);          // Questiona turno
+        fflush(stdin);                                                                        // Limpando buffer do teclado
+        wscanf(L"%lc", &nova_turma->turno);                                                   // Armazenando turno na variável de parâmetro
+        if (nova_turma->turno == 'm' || nova_turma->turno == 't' || nova_turma->turno == 'n') // Validando se o turno informado é valido
+        {
+            printf("Quantidade limite de alunos: "); // Questiona quantidade limite de alunos
+            fflush(stdin);                           // Limpando buffer do teclado
+            scanf("%d", &nova_turma->qtd_limite);    // Armazenando quantidade limite de alunos na variável de parâmetro
+            if (nova_turma->qtd_limite > 0)          // Verificando se foi digitado nº positivo
+                return 1;                            // Retornando inteiro lógico 1, dando sinal de que ocorreu tudo certo!
+            else
+                printf("Quantidade de alunos inv%clida!\n", 160);
+        }
+        else // Turno inválido
+        {
             printf("\nTurno inv%clido!\n", 160);
-            return 0;
         }
     }
-    else
+    else // Código inválido
     {
         printf("\nN%co %c poss%cvel criar uma turma com esse c%cdigo!\n", 198, 130, 161, 162);
-        return 0;
     }
+    return 0; //  Retorno falso de processo não efetuado
 }
 
 /**
@@ -76,7 +80,7 @@ int entrada_dados_turma(Turma *nova_turma)
 */
 int cadastro_turma(void)
 {
-    FILE *arquivo_turmas = fopen("Turmas.bin", "a+b"); //  Abre/Cria o arquivo 'Turmas.bin' e posiciona o ponteiro no final dele (abertura para gravação de dados)
+    FILE *arquivo_turmas = fopen("Turmas.bin", "a+b"); //  Abre o arquivo 'Turmas.bin' e posiciona o ponteiro no final dele (abertura para gravação de dados)
 
     if (arquivo_turmas != NULL) //  Se for possível abrir/criar o arquivo 'Turmas.bin'
     {
@@ -108,9 +112,10 @@ void imprime_turma(Turma aux)
 {
     putchar(186);
 
-    for(int i = 0; i < 74; i++){
+    for (int i = 0; i < 74; i++)
+    {
 
-        if(i != 9 && i != 45 && i != 55 && i != 64)
+        if (i != 9 && i != 45 && i != 55 && i != 64)
             putchar(32);
         else
             putchar(186);
@@ -121,24 +126,23 @@ void imprime_turma(Turma aux)
 
     putchar(186);
 
-    if(aux.turno == 'm')
+    if (aux.turno == 'm')
         printf("%9d%c%-35ls%c  Manh%c  %c%8d%c%9d%c\n", aux.codigo, 186, aux.curso, 186, 198, 186, aux.qtd_alunos, 186, aux.qtd_limite, 186);
+    else if (aux.turno == 't')
+        printf("%9d%c%-35ls%c  Tarde  %c%8d%c%9d%c\n", aux.codigo, 186, aux.curso, 186, 186, aux.qtd_alunos, 186, aux.qtd_limite, 186);
     else
-        if(aux.turno == 't')
-            printf("%9d%c%-35ls%c  Tarde  %c%8d%c%9d%c\n", aux.codigo, 186, aux.curso, 186, 186, aux.qtd_alunos, 186, aux.qtd_limite, 186);
-        else
-            printf("%9d%c%-35ls%c  Noite  %c%8d%c%9d%c\n", aux.codigo, 186, aux.curso, 186, 186, aux.qtd_alunos, 186, aux.qtd_limite, 186);
+        printf("%9d%c%-35ls%c  Noite  %c%8d%c%9d%c\n", aux.codigo, 186, aux.curso, 186, 186, aux.qtd_alunos, 186, aux.qtd_limite, 186);
 
     putchar(186);
 
-    for(int i = 0; i < 74; i++){
+    for (int i = 0; i < 74; i++)
+    {
 
-        if(i != 9 && i != 45 && i != 55 && i != 64)
+        if (i != 9 && i != 45 && i != 55 && i != 64)
             putchar(32);
         else
             putchar(186);
     }
-
 }
 
 /**
@@ -155,21 +159,23 @@ void imprime_todas_turmas(void)
         {
             Turma turma_aux;
 
-            if(fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)){
+            if (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas))
+            {
                 imprime_cabecalho_turma();
                 fseek(arquivo_turmas, 0, SEEK_SET);
             }
 
             while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas))
             {
-                if (turma_aux.codigo >= 0){
+                if (turma_aux.codigo >= 0)
+                {
                     imprime_turma(turma_aux);
-                    if(fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)){
+                    if (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas))
+                    {
                         imprime_fim_turma();
                         fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR);
+                    }
                 }
-
-            }
             }
 
             imprime_fim_turma();
@@ -195,28 +201,27 @@ void imprime_todas_turmas(void)
 */
 Turma busca_turma(int aux)
 {
-    FILE *arquivo_turmas = fopen("Turmas.bin", "rb");
-    Turma turma_aux;
+    FILE *arquivo_turmas = fopen("Turmas.bin", "rb"); //  Abre o arquivo 'Turmas.bin'
+    Turma turma_aux;                                  // Variável auxiliar
 
-    if (arquivo_turmas)
+    if (arquivo_turmas) // Se arquivo foi aberto
     {
-        while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas))
+        while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)) // Vare arquivo turma a turma
         {
-            if (turma_aux.codigo == aux)
+            if (turma_aux.codigo == aux) // Se turma encontrada (comparação feita através do código)
             {
-                fclose(arquivo_turmas);
-                return turma_aux;
+                fclose(arquivo_turmas); // fecha arquivo
+                return turma_aux;       // retorna turma
             }
         }
-        turma_aux.codigo = -2;
-        fclose(arquivo_turmas);
-        return turma_aux;
+        // caso não ocorra retorno antes (turma não encontrada)
+        fclose(arquivo_turmas); // fecha o arquivo
     }
-    else
-    {
+    else // Se arquivo não aberto
         printf("Problema no arquivo 'Turmas.bin'\n");
-        return turma_aux;
-    }
+
+    turma_aux.codigo = -2; // coloca marcador lógico no código de retorno para eventuais verificações
+    return turma_aux;      // retorna turma com marcação lógica
 }
 
 /**
@@ -227,23 +232,21 @@ Turma busca_turma(int aux)
 */
 int qtd_turmas_cadastradas(void)
 {
-    FILE *arquivo_turmas = fopen("Turmas.bin", "rb");
-    int contador = 0;
-    if (arquivo_turmas)
+    FILE *arquivo_turmas = fopen("Turmas.bin", "rb"); //  Abre o arquivo 'Turmas.bin'
+    int contador = 0;                                 // Variável auxiliar
+    if (arquivo_turmas)                               // Se arquivo foi aberto
     {
-        Turma turma_aux;
-        while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas))
+        Turma turma_aux;                                            // Variável auxiliar
+        while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)) // Vare arquivo turma a turma
         {
-            contador++;
+            if (turma_aux.codigo != -1) // Caso não seja a lista de espera
+                contador++;             // Incrementa contador
         }
-        fclose(arquivo_turmas);
-        return contador;
+        fclose(arquivo_turmas); // Fecha arquivo
     }
-    else
-    {
+    else // Se arquivo não aberto
         printf("Problema no arquivo 'Turmas.bin'\n");
-        return 0;
-    }
+    return contador; // retorna contador
 }
 
 /**
@@ -277,7 +280,8 @@ void cria_lista_espera(void)
 * Entrada (parâmetro(s)): <int> código da turma a ser excluída.
 * Saída (retorno(s)):  <void> sem retorno.
 */
-void excluir_turma(int codigo){
+void excluir_turma(int codigo)
+{
 
     char escolha = '\0';
 
@@ -287,10 +291,12 @@ void excluir_turma(int codigo){
 
     scanf("%c", &escolha);
 
-    if(escolha == 'S' || escolha == 's'){
+    if (escolha == 'S' || escolha == 's')
+    {
         FILE *arquivo_turmas = fopen("Turmas.bin", "r+b");
 
-        if(arquivo_turmas){
+        if (arquivo_turmas)
+        {
 
             Turma turma_aux;
 
@@ -301,13 +307,17 @@ void excluir_turma(int codigo){
 
             fseek(arquivo_turmas, 0, SEEK_SET);
 
-            while(fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)){
+            while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas))
+            {
 
-                if(turma_aux.codigo == codigo){
+                if (turma_aux.codigo == codigo)
+                {
 
-                    if(ftell(arquivo_turmas) < tamanho_maximo_turmas){
+                    if (ftell(arquivo_turmas) < tamanho_maximo_turmas)
+                    {
 
-                        while(fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)){
+                        while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas))
+                        {
 
                             fseek(arquivo_turmas, sizeof(Turma) * -2, SEEK_CUR);
 
@@ -317,8 +327,8 @@ void excluir_turma(int codigo){
                         }
 
                         fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR);
-
-                    }else
+                    }
+                    else
                         fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR);
 
                     int tamanho = ftell(arquivo_turmas); //Obtém a posição do novo final
@@ -338,12 +348,12 @@ void excluir_turma(int codigo){
 
                     break;
                 }
-
             }
 
             FILE *arquivo_alunos = fopen("Alunos.bin", "r+b");
 
-            if(arquivo_alunos){
+            if (arquivo_alunos)
+            {
 
                 Aluno aluno_aux;
 
@@ -354,13 +364,17 @@ void excluir_turma(int codigo){
 
                 fseek(arquivo_alunos, 0, SEEK_SET);
 
-                while(fread(&aluno_aux, sizeof(Aluno), 1, arquivo_alunos)){
+                while (fread(&aluno_aux, sizeof(Aluno), 1, arquivo_alunos))
+                {
 
-                    if(aluno_aux.turma == codigo){
+                    if (aluno_aux.turma == codigo)
+                    {
 
-                        if(ftell(arquivo_alunos) < tamanho_maximo_alunos){
+                        if (ftell(arquivo_alunos) < tamanho_maximo_alunos)
+                        {
 
-                            while(fread(&aluno_aux, sizeof(Aluno), 1, arquivo_alunos)){
+                            while (fread(&aluno_aux, sizeof(Aluno), 1, arquivo_alunos))
+                            {
 
                                 fseek(arquivo_alunos, sizeof(Aluno) * -2, SEEK_CUR);
 
@@ -368,8 +382,8 @@ void excluir_turma(int codigo){
 
                                 fseek(arquivo_alunos, sizeof(Aluno), SEEK_CUR);
                             }
-
-                        }else
+                        }
+                        else
                             fseek(arquivo_alunos, sizeof(Aluno) * -1, SEEK_CUR);
 
                         int tamanho = ftell(arquivo_alunos); //Obtém a posição do novo final
@@ -390,17 +404,15 @@ void excluir_turma(int codigo){
                         arquivo_alunos = fopen("Alunos.bin", "r+b");
 
                         continue;
-
                     }
-
                 }
 
                 fclose(arquivo_alunos);
-
-            }else
+            }
+            else
                 printf("Problema no arquivo 'Alunos.bin'\n");
-
-        }else
+        }
+        else
             printf("Problema no arquivo 'Turmas.bin'\n");
     }
 }
@@ -410,7 +422,8 @@ void excluir_turma(int codigo){
 * Entrada (parâmetro(s)): <int> código da turma a ser editada.
 * Saída (retorno(s)):  <void> sem retorno.
 */
-void editar_turma(int codigo){
+void editar_turma(int codigo)
+{
 
     char escolha = '\0';
 
@@ -420,7 +433,8 @@ void editar_turma(int codigo){
 
     scanf("%c", &escolha);
 
-    if(escolha == 'S' || escolha == 's'){
+    if (escolha == 'S' || escolha == 's')
+    {
 
         FILE *arquivo_turmas = fopen("Turmas.bin", "r+b");
 
@@ -430,13 +444,17 @@ void editar_turma(int codigo){
 
         entrada_dados_turma(&editar);
 
-        if(editar.codigo){
+        if (editar.codigo)
+        {
 
-            if(arquivo_turmas){
+            if (arquivo_turmas)
+            {
 
-                while(fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)){
+                while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas))
+                {
 
-                    if(turma_aux.codigo == codigo){
+                    if (turma_aux.codigo == codigo)
+                    {
 
                         editar.qtd_alunos = turma_aux.qtd_alunos;
 
@@ -447,13 +465,16 @@ void editar_turma(int codigo){
 
                         FILE *arquivo_alunos = fopen("Alunos.bin", "r+b");
 
-                        if(arquivo_alunos){
+                        if (arquivo_alunos)
+                        {
 
                             Aluno aluno_aux;
 
-                            while(fread(&aluno_aux, sizeof(Aluno), 1, arquivo_alunos)){
+                            while (fread(&aluno_aux, sizeof(Aluno), 1, arquivo_alunos))
+                            {
 
-                                if(aluno_aux.turma == codigo){
+                                if (aluno_aux.turma == codigo)
+                                {
 
                                     fseek(arquivo_alunos, sizeof(Aluno) * -1, SEEK_CUR);
 
@@ -463,27 +484,21 @@ void editar_turma(int codigo){
                                     fclose(arquivo_alunos);
                                     fopen("Alunos.bin", "r+b");
                                 }
-
                             }
 
-
                             break;
-
-                        }else
+                        }
+                        else
                             printf("Problema no arquivo 'Alunos.bin'\n");
 
                         printf("A turma foi editada, bem como seus alunos!\n");
-
                     }
-
                 }
-
-            }else
+            }
+            else
                 printf("Problema no arquivo 'Turmas.bin'\n");
         }
-
     }
-
 }
 
 /**
@@ -491,17 +506,18 @@ void editar_turma(int codigo){
 * Entrada (parâmetro(s)): <void> nenhum parâmetro é recebido, pois a função faz impressão estática.
 * Saída (retorno(s)):  <void> sem retorno.
 */
-void imprime_cabecalho_turma(void){
+void imprime_cabecalho_turma(void)
+{
 
     putchar(201);
 
-    for(int i = 0; i < 74; i++){
+    for (int i = 0; i < 74; i++)
+    {
 
-        if(i != 9 && i != 45 && i != 55 && i != 64)
+        if (i != 9 && i != 45 && i != 55 && i != 64)
             putchar(205);
         else
             putchar(203);
-
     }
 
     putchar(187);
@@ -509,13 +525,13 @@ void imprime_cabecalho_turma(void){
 
     putchar(186);
 
-    for(int i = 0; i < 74; i++){
+    for (int i = 0; i < 74; i++)
+    {
 
-        if(i != 9 && i != 45 && i != 55 && i != 64)
+        if (i != 9 && i != 45 && i != 55 && i != 64)
             putchar(32);
         else
             putchar(186);
-
     }
 
     putchar(186);
@@ -525,13 +541,13 @@ void imprime_cabecalho_turma(void){
 
     putchar(186);
 
-    for(int i = 0; i < 74; i++){
+    for (int i = 0; i < 74; i++)
+    {
 
-        if(i != 9 && i != 45 && i != 55 && i != 64)
+        if (i != 9 && i != 45 && i != 55 && i != 64)
             putchar(32);
         else
             putchar(186);
-
     }
 
     putchar(186);
@@ -539,18 +555,17 @@ void imprime_cabecalho_turma(void){
 
     putchar(204);
 
-    for(int i = 0; i < 74; i++){
+    for (int i = 0; i < 74; i++)
+    {
 
-        if(i != 9 && i != 45 && i != 55 && i != 64)
+        if (i != 9 && i != 45 && i != 55 && i != 64)
             putchar(205);
         else
             putchar(206);
-
     }
 
     putchar(185);
     putchar(10);
-
 }
 
 /**
@@ -558,23 +573,23 @@ void imprime_cabecalho_turma(void){
 * Entrada (parâmetro(s)): <void> nenhum parâmetro é recebido, pois a função faz impressão estática.
 * Saída (retorno(s)):  <void> sem retorno.
 */
-void imprime_fim_turma(void){
+void imprime_fim_turma(void)
+{
 
     putchar(186);
     putchar(10);
 
     putchar(204);
 
-    for(int i = 0; i < 74; i++){
+    for (int i = 0; i < 74; i++)
+    {
 
-        if(i != 9 && i != 45 && i != 55 && i != 64)
+        if (i != 9 && i != 45 && i != 55 && i != 64)
             putchar(205);
         else
             putchar(206);
-
     }
 
     putchar(185);
     putchar(10);
-
 }

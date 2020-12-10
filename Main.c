@@ -50,7 +50,7 @@ int main(void)
         printf("[2] Cadastrar aluno na lista de espera\n");
         printf("[3] Ver lista de espera\n");
 
-        if (qtd_turmas > 1) // Menu de manipulação intermediário que é exibido se houver ao menos uma turma (não levando em consideração a lista de espera)
+        if (qtd_turmas > 0) // Menu de manipulação intermediário que é exibido se houver ao menos uma turma (não levando em consideração a lista de espera)
         {
             printf("[4] Ver dados das turmas\n");
             printf("[5] Buscar turma\n");
@@ -60,7 +60,7 @@ int main(void)
             printf("[9] Cadastrar aluno\n");
         }
 
-        if (qtd_turmas > 1 && qtd_alunos > 0) // Menu de manipulação final, se tiver houver ao menos um aluno e ao menos uma turma
+        if (qtd_turmas > 0 && qtd_alunos > 0) // Menu de manipulação final, se tiver houver ao menos um aluno e ao menos uma turma
         {
 
             printf("[10] Ver os alunos por turma\n");
@@ -84,8 +84,9 @@ int main(void)
             Sleep(5);
             exit(1);
         case 1: // Rotina cadastrar turma
-            cadastro_turma();
-            atualizar_lista_espera();
+            i = cadastro_turma();
+            if (i != 0)
+                atualizar_lista_espera();
             break;
         case 2: // Rotina cadastrar aluno na lista de espera
             cadastrar_aluno_espera();
@@ -97,7 +98,7 @@ int main(void)
             break;
         }
 
-        if (qtd_turmas > 1) // Caso haja ao menos uma turma (não levando em consideração a lista de espera)
+        if (qtd_turmas > 0) // Caso haja ao menos uma turma (não levando em consideração a lista de espera)
         {
 
             switch (escolha) // Estrutura de condição, evita ambiguidade na visibilidade das opções
@@ -142,7 +143,7 @@ int main(void)
                     printf("Turma n%co encontrada.\n", 198);
                 break;
             case 8: // Rotina quantidade de turmas
-                printf("Ha %d turma(s)!\n", qtd_turmas - 1);
+                printf("Ha %d turma(s)!\n", qtd_turmas);
                 break;
 
             case 9: // Rotina cadastrar aluno
@@ -153,7 +154,7 @@ int main(void)
             }
         }
 
-        if (qtd_turmas > 1 && qtd_alunos > 0) //Se houver ao menos um aluno e ao menos uma turma
+        if (qtd_turmas > 0 && qtd_alunos > 0) //Se houver ao menos um aluno e ao menos uma turma
         {
             switch (escolha) // Estrutura de condição, evita ambiguidade na visibilidade das opções
             {
