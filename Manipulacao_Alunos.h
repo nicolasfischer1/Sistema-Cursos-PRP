@@ -4,7 +4,7 @@
 
 #include "Manipulacao_Turmas.h"
 
-//  ProtÃ³tipos das funÃ§Ãµes
+//  ProtÃ³tipos das funÃ§Ãµes //
 void cadastrar_aluno_espera(void);		 // cadastrar aluno na lista de espera
 void cadastrar_aluno(void);				 // cadastrar aluno
 void imprime_lista_espera(void);		 // ver lista de espera
@@ -20,6 +20,7 @@ void atualizar_lista_espera(void); // atualizar a lista de espera
 void imprime_cabecalho_aluno(void);
 void imprime_fim_aluno(void);
 
+// função para buscar aluno
 Aluno buscar_aluno(int matricula)
 {
 
@@ -621,7 +622,7 @@ void atualizar_lista_espera(void)
 							fseek(arquivo_turmas, sizeof(Turma)*-1, SEEK_CUR);
 							turma_aux.qtd_alunos--;
 							fwrite(&turma_aux, sizeof(Turma), 1, arquivo_turmas);
-							
+
 							fclose(arquivo_turmas);
 							arquivo_turmas = fopen("Turmas.bin", "r+b");
 
