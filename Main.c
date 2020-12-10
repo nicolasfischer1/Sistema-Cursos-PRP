@@ -26,11 +26,11 @@ int main(void)
     Turma aux_t;
 
     //  Caso nao tenha sido criada a lista de espera
-    aux_t = busca_turma(-1);    // Buscando turma especial (lista de espera)
-    if (aux_t.codigo != -1) // Caso não encontre a lista de espera (turma especial, com código -1)
+    aux_t = busca_turma(-1); // Buscando turma especial (lista de espera)
+    if (aux_t.codigo != -1)  // Caso não encontre a lista de espera (turma especial, com código -1)
         cria_lista_espera(); // É criada a lista de espera (inicializado os atributos)
 
-    while (1)   // Laço continuo de seleção das opções
+    while (1) // Laço continuo de seleção das opções
     {
         // Declaração de variáveis auxiliares
         int escolha;
@@ -50,7 +50,7 @@ int main(void)
         printf("[2] Cadastrar aluno na lista de espera\n");
         printf("[3] Ver lista de espera\n");
 
-        if (qtd_turmas > 1)   // Menu de manipulação intermediário que é exibido se houver ao menos uma turma (não levando em consideração a lista de espera)
+        if (qtd_turmas > 1) // Menu de manipulação intermediário que é exibido se houver ao menos uma turma (não levando em consideração a lista de espera)
         {
             printf("[4] Ver dados das turmas\n");
             printf("[5] Buscar turma\n");
@@ -71,12 +71,12 @@ int main(void)
             printf("[15] Quantidade de alunos cadastrados\n");
         }
 
-        fflush(stdin);  // Limpa buffer do teclado
-        scanf("%d", &escolha);  // Recebe e armazena a escola (opção digitada)
+        fflush(stdin);         // Limpa buffer do teclado
+        scanf("%d", &escolha); // Recebe e armazena a escola (opção digitada)
 
-        switch (escolha)    // Estrutura de condição, evita ambiguidade na visibilidade das opções, ocorre todas as hipóteses
+        switch (escolha) // Estrutura de condição, evita ambiguidade na visibilidade das opções, ocorre todas as hipóteses
         {
-        case -1:    // Rotina sobre
+        case -1: // Rotina sobre
             printf("Que bom que quer saber sobre n%cs =)\nEsse %c um projeto acad%cmico da disciplina de Programa%c%co para Resolu%c%co de Problemas (2/2020 da UNISC).\nDesenvolvido pelo Nicolas Fischer, Patrick Priebe e Bruno Bolzan; e orientado pelo Prof. Ivan S.\nO mesmo consiste num sistema de cursos onde se pode manipular de variadas formas as turmas e alunos!\nS%co utilizadas estruturas de registro com grava%c%co dos dados em arquivos bin%crios (.bin).\nTamb%cm s%co empregados conceitos das estruturas de dados como: listas lineares, filas e pilhas (n%co encadeadas).\nLinguagem: C 99.\n", 162, 130, 136, 135, 198, 135, 198, 198, 135, 198, 160, 130, 198, 198);
             break;
         case 0: // Rotina saída
@@ -100,7 +100,7 @@ int main(void)
         if (qtd_turmas > 1) // Caso haja ao menos uma turma (não levando em consideração a lista de espera)
         {
 
-            switch (escolha)    // Estrutura de condição, evita ambiguidade na visibilidade das opções
+            switch (escolha) // Estrutura de condição, evita ambiguidade na visibilidade das opções
             {
 
             case 4: // Rotina imprimir todas as turmas
@@ -112,7 +112,8 @@ int main(void)
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
-                if (aux_t.codigo >= 0){
+                if (aux_t.codigo >= 0)
+                {
                     imprime_cabecalho_turma();
                     imprime_turma(aux_t);
                     imprime_fim_turma();
@@ -120,7 +121,7 @@ int main(void)
                 else
                     printf("\nTurma n%co encontrada\n", 198);
                 break;
-              case 6: // Rotina editar dados de uma turma
+            case 6: // Rotina editar dados de uma turma
                 printf("Digite o c%cdigo da turma que deseja editar: ", 162);
                 fflush(stdin);
                 scanf("%d", &i);
@@ -152,11 +153,11 @@ int main(void)
             }
         }
 
-        if (qtd_turmas > 1 && qtd_alunos > 0)   //Se houver ao menos um aluno e ao menos uma turma
+        if (qtd_turmas > 1 && qtd_alunos > 0) //Se houver ao menos um aluno e ao menos uma turma
         {
-            switch (escolha)    // Estrutura de condição, evita ambiguidade na visibilidade das opções
+            switch (escolha) // Estrutura de condição, evita ambiguidade na visibilidade das opções
             {
-            case 10:    // Rotina imprime todos os alunos de uma turma
+            case 10: // Rotina imprime todos os alunos de uma turma
                 printf("C%cdigo: ", 162);
                 fflush(stdin);
                 scanf("%d", &i);
@@ -166,15 +167,16 @@ int main(void)
                 else
                     printf("N%co foi poss%cvel encontrar essa turma ou sem alunos nela!\n", 198, 161);
                 break;
-            case 11:    // Rotina imprimir todos os alunos
+            case 11: // Rotina imprimir todos os alunos
                 imprimir_todos_alunos();
                 break;
-            case 12:    // Rotina buscar aluno
+            case 12: // Rotina buscar aluno
                 printf("Matr%ccula: ", 161);
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_a = buscar_aluno(i);
-                if (aux_a.matricula != -2){
+                if (aux_a.matricula != -2)
+                {
 
                     puts("\n");
 
@@ -183,25 +185,24 @@ int main(void)
                     imprime_aluno(aux_a, 0);
 
                     imprime_fim_aluno();
-
                 }
                 else
                     printf("Aluno n%co encontrado!\n", 198);
                 break;
-            case 13:    // Rotina editar aluno
+            case 13: // Rotina editar aluno
                 printf("Matr%ccula: ", 161);
                 fflush(stdin);
                 scanf("%d", &i);
                 editar_aluno(i);
                 break;
-            case 14:    // Rotina excluir (desmatricular) aluno
+            case 14: // Rotina excluir (desmatricular) aluno
                 printf("Matr%ccula: ", 161);
                 fflush(stdin);
                 scanf("%d", &i);
                 desmatricular_aluno(i);
                 atualizar_lista_espera();
                 break;
-            case 15:    // Rotina quantidade de alunos
+            case 15: // Rotina quantidade de alunos
                 printf("Ha %d alunos cadastrados (incluindo os da lista de espera)!\n", qtd_alunos_cadastrados());
                 break;
             default:
@@ -211,9 +212,9 @@ int main(void)
         if (escolha > 15 || escolha < -1) // Caso não valide nenhuma escolha
             printf("Op%c%co inv%clida!\n", 135, 198, 160);
 
-        fflush(stdin);  // Limpa buffer do teclado
-        getchar();  // Parada de tela, espera digitar algo
-        system("cls");  // Limpa tela
-    }   // fim do while (1)
-    return 0;   // Retorno da função principal
+        fflush(stdin); // Limpa buffer do teclado
+        getchar();     // Parada de tela, espera digitar algo
+        system("cls"); // Limpa tela
+    }                  // fim do while (1)
+    return 0;          // Retorno da função principal
 }
