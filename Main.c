@@ -26,7 +26,7 @@ int main(void)
     Turma aux_t;
 
     //  Caso nao tenha sido criada a lista de espera
-    aux_t = busca_turma(-1);
+    aux_t = busca_turma(-1);    // Buscando turma especial (lista de espera)
     if (aux_t.codigo != -1) // Caso não encontre a lista de espera (turma especial, com código -1)
         cria_lista_espera(); // É criada a lista de espera (inicializado os atributos)
 
@@ -37,6 +37,7 @@ int main(void)
         int i = 0;
 
         // Variável auxiliar que guarda a quantidade de alunos
+        // Evita que a função seja chamada mais de uma vez em verificações naquele instante do laço
         int qtd_alunos = qtd_alunos_cadastrados();
         int qtd_turmas = qtd_turmas_cadastradas();
 
@@ -114,13 +115,13 @@ int main(void)
                 if (aux_t.codigo >= 0){
                     imprime_cabecalho_turma();
                     imprime_turma(aux_t);
-                    imprime_fim_tabela_turma();
+                    imprime_fim_turma();
                 }
                 else
                     printf("\nTurma n%co encontrada\n", 198);
                 break;
               case 6: // Rotina editar dados de uma turma
-                printf("Digite o codigo da turma que deseja editar: ");
+                printf("Digite o c%cdigo da turma que deseja editar: ", 162);
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
@@ -129,9 +130,8 @@ int main(void)
                 else
                     printf("Turma n%co encontrada.\n", 198);
                 break;
-                break;
             case 7: // Rotina exclui uma turma
-                printf("Digite o codigo da turma que deseja excluir: ");
+                printf("Digite o c%cdigo da turma que deseja excluir: ", 162);
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
@@ -182,7 +182,7 @@ int main(void)
 
                     imprime_aluno(aux_a, 0);
 
-                    imprime_fim_tabela_aluno();
+                    imprime_fim_aluno();
 
                 }
                 else

@@ -6,29 +6,27 @@
 */
 
 // Inclusão de bibliotecas padrões da linguagem.
-#include <stdio.h>    // Biblioteca padrão de entrada e saída.
-#include <stdlib.h>   // Biblioteca padrão para manipulação de memória com uso dinâmico.
-#include <string.h>   // Biblioteca padrão para manipulação de strings.
-#include <windows.h>  // Biblioteca padrão para manipulação de API.
+#include <stdio.h>	 // Biblioteca padrão de entrada e saída.
+#include <stdlib.h>	 // Biblioteca padrão para manipulação de memória com uso dinâmico.
+#include <windows.h> // Biblioteca padrão para manipulação de API.
 
 #include "Manipulacao_Turmas.h" // Inclusão da biblioteca para manipulação das turmas.
 
 //  Protótipos das funções.
-void cadastrar_aluno_espera(void);		 
-void cadastrar_aluno(void);				 
+void cadastrar_aluno_espera(void);		
+void cadastrar_aluno(void);				
 void imprime_lista_espera(void);		 
 void imprime_alunos_turma(Turma aux);	 
-void imprimir_todos_alunos(void);		 
-Aluno buscar_aluno(int matricula);		 
-void editar_aluno(int matricula);		 
+void imprimir_todos_alunos(void);		
+Aluno buscar_aluno(int matricula);		
+void editar_aluno(int matricula);		
 void desmatricular_aluno(int matricula); 
-int qtd_alunos_cadastrados(void);		 
+int qtd_alunos_cadastrados(void);		
 int entrada_dados_aluno(Aluno *novo_aluno);
-void atualizar_lista_espera(void); 
 void imprime_aluno(Aluno aluno_aux, int escolha);
+void atualizar_lista_espera(void); 
 void imprime_cabecalho_aluno(void);
 void imprime_fim_aluno(void);
-void imprime_fim_tabela_aluno(void);
 
 /**
 * Função que busca um aluno na base de dados.
@@ -39,21 +37,21 @@ void imprime_fim_tabela_aluno(void);
 Aluno buscar_aluno(int matricula)
 {
 
-	FILE *arquivo_alunos = fopen("Alunos.bin", "rb"); //  Abre/cria o arquivo 'Alunos.bin' "rb" (abertura para leitura de dados) 
+	FILE *arquivo_alunos = fopen("Alunos.bin", "rb"); //  Abre/cria o arquivo 'Alunos.bin' "rb" (abertura para leitura de dados)
 
-	if (arquivo_alunos != NULL)  //  Se for possí­vel abrir/criar o arquivo 'Alunos.bin'
+	if (arquivo_alunos != NULL) //  Se for possí­vel abrir/criar o arquivo 'Alunos.bin'
 	{
-		Aluno buscar;  //  Criando registro temporário (visí­vel apenas dentro desta condicional)
-		while (fread(&buscar, sizeof(Aluno), 1, arquivo_alunos) == 1)  // Loop enquanto for possível ler uma linha do arquivo alunos
+		Aluno buscar;												  //  Criando registro temporário (visí­vel apenas dentro desta condicional)
+		while (fread(&buscar, sizeof(Aluno), 1, arquivo_alunos) == 1) // Loop enquanto for possível ler uma linha do arquivo alunos
 		{
 			if (matricula == buscar.matricula) // Compara as matrículas
-				return buscar;                 // Retorna o aluno
+				return buscar;				   // Retorna o aluno
 		}
-		buscar.matricula = -2;                 // Caso não encontre retorna -2
-		fclose(arquivo_alunos);                //  Salva as alterações, limpando o buffer e fechando o arquivo
-		return buscar;                         // Retorna que o aluno não está cadastrado
+		buscar.matricula = -2;	// Caso não encontre retorna -2
+		fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
+		return buscar;			// Retorna que o aluno não está cadastrado
 	}
-	else                         //  Se não for possí­vel abrir/criar o arquivo 'Alunos.bin'
+	else //  Se não for possí­vel abrir/criar o arquivo 'Alunos.bin'
 		printf("Problema no arquivo 'Alunos.bin'\n");
 }
 
@@ -69,38 +67,38 @@ void cadastrar_aluno_espera(void) // manipular o arquivo turmas e adicionar acr�
 
 	if (arquivo_alunos != NULL) //  Se for posssível abrir/criar o arquivo 'Alunos.bin'
 	{
-		Aluno aluno_espera; //  Criando registro temporário (visí­vel apenas dentro desta condicional)
-		int validador = entrada_dados_aluno(&aluno_espera);  // Validador recebe a entrada de dados passando como argumento o aluno
-		aluno_espera.aux = aluno_espera.turma;   // O aux desse aluno recebe o código da turma 
-		aluno_espera.turma = -1;                 // A turma desse aluno é alterada para -1 (referente a lista de espera)
+		Aluno aluno_espera;									//  Criando registro temporário (visí­vel apenas dentro desta condicional)
+		int validador = entrada_dados_aluno(&aluno_espera); // Validador recebe a entrada de dados passando como argumento o aluno
+		aluno_espera.aux = aluno_espera.turma;				// O aux desse aluno recebe o código da turma
+		aluno_espera.turma = -1;							// A turma desse aluno é alterada para -1 (referente a lista de espera)
 
-		if (validador != 0)  // Se o validador for diferente de 0 (matrícula inválida ou já existente)
+		if (validador != 0) // Se o validador for diferente de 0 (matrícula inválida ou já existente)
 		{
 			fwrite(&aluno_espera, sizeof(Aluno), 1, arquivo_alunos); //  "Escreve" o registro dentro do arquivo
 
-			FILE *arquivo_turmas = fopen("Turmas.bin", "r+b");  //  Abre/cria o arquivo 'Turmas.bin' "rb" (abertura para leitura de dados)
-			
-			if (arquivo_turmas)    //  Se for possí­vel abrir/criar o arquivo 'Turmas.bin'
+			FILE *arquivo_turmas = fopen("Turmas.bin", "r+b"); //  Abre/cria o arquivo 'Turmas.bin' "rb" (abertura para leitura de dados)
+
+			if (arquivo_turmas) //  Se for possí­vel abrir/criar o arquivo 'Turmas.bin'
 			{
-				Turma aux;   //  Criando registro temporário (visí­vel apenas dentro desta condicional)
-				while (fread(&aux, sizeof(Turma), 1, arquivo_turmas))  // Loop enquanto for possível ler uma linha dentro do arquivo turmas
+				Turma aux;											  //  Criando registro temporário (visí­vel apenas dentro desta condicional)
+				while (fread(&aux, sizeof(Turma), 1, arquivo_turmas)) // Loop enquanto for possível ler uma linha dentro do arquivo turmas
 				{
-					if (aux.codigo == -1)   // Se o código aux do aluno for -1
+					if (aux.codigo == -1) // Se o código aux do aluno for -1
 					{
-						fseek(arquivo_turmas, (sizeof(Turma) * -1), SEEK_CUR);  // Reposiciona o indicador de posição do fluxo em função do deslocamento -1
-						aux.qtd_alunos++;  // Acresce a quantidade de alunos da turma 
-						fwrite(&aux, sizeof(Turma), 1, arquivo_turmas);  // Escreve as alterações no arquivo turmas
+						fseek(arquivo_turmas, (sizeof(Turma) * -1), SEEK_CUR); // Reposiciona o indicador de posição do fluxo em função do deslocamento -1
+						aux.qtd_alunos++;									   // Acresce a quantidade de alunos da turma
+						fwrite(&aux, sizeof(Turma), 1, arquivo_turmas);		   // Escreve as alterações no arquivo turmas
 						printf("\nAluno cadastrado com sucesso na lista de espera!\n");
-						break;  // Término do laço
+						break; // Término do laço
 					}
 				}
-				fclose(arquivo_turmas);  //  Salva as alterações, limpando o buffer e fechando o arquivo
+				fclose(arquivo_turmas); //  Salva as alterações, limpando o buffer e fechando o arquivo
 			}
-			else              //  Se não for possí­vel abrir/criar o arquivo 'Turmas.bin'
+			else //  Se não for possí­vel abrir/criar o arquivo 'Turmas.bin'
 				printf("Problema no arquivo 'Turmas.bin'\n");
 		}
 	}
-	else       //  Se não for possí­vel abrir/criar o arquivo 'Alunos.bin'
+	else //  Se não for possí­vel abrir/criar o arquivo 'Alunos.bin'
 		printf("Problema no arquivo 'Alunos.bin'\n");
 
 	fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
@@ -115,55 +113,55 @@ void cadastrar_aluno_espera(void) // manipular o arquivo turmas e adicionar acr�
 int entrada_dados_aluno(Aluno *novo_aluno)
 {
 
-	printf("Digite a matr%ccula: ", 161);  // Inserção da matrícula do aluno
-	fflush(stdin); // Limpa o buffer
+	printf("Digite a matr%ccula: ", 161); // Inserção da matrícula do aluno
+	fflush(stdin);						  // Limpa o buffer
 	scanf("%d", &novo_aluno->matricula);  // Guarda a matrícula no campo correspondente
 
-	Aluno a_validador = buscar_aluno(novo_aluno->matricula);  // Verifica se a matrícula já existe
+	Aluno a_validador = buscar_aluno(novo_aluno->matricula); // Verifica se a matrícula já existe
 
-	if (novo_aluno->matricula >= 0 && a_validador.matricula == -2)  // Caso a matrícula seja maior ou igual a 0 e o validador tenha retornado -2 (matrícula inexistente)
+	if (novo_aluno->matricula >= 0 && a_validador.matricula == -2) // Caso a matrícula seja maior ou igual a 0 e o validador tenha retornado -2 (matrícula inexistente)
 	{
-		printf("Nome: ");  // Inserção do nome do aluno
-		fflush(stdin);     // Limpa o buffer
-		wscanf(L"%ls", &novo_aluno->nome);  // Guarda o nome no campo correspondente
+		printf("Nome: ");				   // Inserção do nome do aluno
+		fflush(stdin);					   // Limpa o buffer
+		wscanf(L"%ls", &novo_aluno->nome); // Guarda o nome no campo correspondente
 
-		if (novo_aluno->nome[0] != '\0' && novo_aluno->nome[0] != ' ' && novo_aluno->nome[0] > 64)  // Caso o nome na posição 0 seja diferente de um espaço e seja um caracter do alfabeto
+		if (novo_aluno->nome[0] != '\0' && novo_aluno->nome[0] != ' ' && novo_aluno->nome[0] > 64) // Caso o nome na posição 0 seja diferente de um espaço e seja um caracter do alfabeto
 		{
-			printf("Idade: "); // Inserção da idade do aluno
-			fflush(stdin);  // Limpa o buffer
-			scanf("%d", &novo_aluno->idade);  // Guarda a matrícula no campo correspondente
+			printf("Idade: ");				 // Inserção da idade do aluno
+			fflush(stdin);					 // Limpa o buffer
+			scanf("%d", &novo_aluno->idade); // Guarda a matrícula no campo correspondente
 
-			if (novo_aluno->idade > 0 && novo_aluno->idade < 150)  // Se a idade do aluno for maior que 0 e menor que 150
+			if (novo_aluno->idade > 0 && novo_aluno->idade < 150) // Se a idade do aluno for maior que 0 e menor que 150
 			{
-				printf("Turma (ou c%cdigo de espera): ", 162);  // Inserção da idade do aluno
-				fflush(stdin);  // Limpa o buffer
-				scanf("%d", &novo_aluno->turma);   // Guarda a turma no campo correspondente
+				printf("Turma (ou c%cdigo de espera): ", 162); // Inserção da idade do aluno
+				fflush(stdin);								   // Limpa o buffer
+				scanf("%d", &novo_aluno->turma);			   // Guarda a turma no campo correspondente
 
-				Turma validador = busca_turma(novo_aluno->turma);  // Validador para verificar se a turma existe
-				if (validador.codigo != -2)  // Caso a turma exista
+				Turma validador = busca_turma(novo_aluno->turma); // Validador para verificar se a turma existe
+				if (validador.codigo != -2)						  // Caso a turma exista
 				{
-					if (validador.qtd_alunos < validador.qtd_limite)  // Verifica se tem espaço na turma
+					if (validador.qtd_alunos < validador.qtd_limite) // Verifica se tem espaço na turma
 					{
 						printf("\nDados cadastrados!\n");
 						return 1;
 					}
-					else                                              // Caso a turma estiver lotada
+					else // Caso a turma estiver lotada
 						printf("\nTurma lotada!\n");
-						return 2;
+					return 2;
 				}
-				else     // Caso a turma não seja encontrada
+				else // Caso a turma não seja encontrada
 				{
 					printf("\nTurma n%co encontrada!\n", 198);
 					return 2;
 				}
 			}
-			else  // Caso a idade seja inválida 
+			else // Caso a idade seja inválida
 				printf("\nIdade inv%clida\n", 160);
 		}
-		else  // Caso o nome seja inválido
+		else // Caso o nome seja inválido
 			printf("\nNome inv%clido!\n", 160);
 	}
-	else  // Caso a matrícula seja inválida ou inexistente 
+	else // Caso a matrícula seja inválida ou inexistente
 		printf("\nMatr%ccula inv%clida ou j%c existente!\n", 161, 160, 160);
 	return 0;
 }
@@ -176,59 +174,54 @@ int entrada_dados_aluno(Aluno *novo_aluno)
 void cadastrar_aluno(void)
 {
 
-	Aluno novo_aluno; // Criando registro temporário (visí­vel apenas dentro desta condicional)
-	int validador = entrada_dados_aluno(&novo_aluno);  // Valida se o aluno foi cadastrado
-	if (validador == 1)  // Caso o aluno não esteja cadastrado
+	Aluno novo_aluno;								  // Criando registro temporário (visí­vel apenas dentro desta condicional)
+	int validador = entrada_dados_aluno(&novo_aluno); // Valida se o aluno foi cadastrado
+	if (validador == 1)								  // Caso o aluno não esteja cadastrado
 	{
-		FILE *arquivo_turmas = fopen("Turmas.bin", "r+b");  // Abre/cria o arquivo 'Turmas.bin' "rb" (abertura para leitura de dados)
-		if (arquivo_turmas)  // Se for posssível abrir/criar o arquivo 'Turmas.bin'
+		FILE *arquivo_turmas = fopen("Turmas.bin", "r+b"); // Abre/cria o arquivo 'Turmas.bin' "rb" (abertura para leitura de dados)
+		if (arquivo_turmas)								   // Se for posssível abrir/criar o arquivo 'Turmas.bin'
 		{
-			Turma aux;  // Criando registro temporário (visí­vel apenas dentro desta condicional)
-			while (fread(&aux, sizeof(Turma), 1, arquivo_turmas))  // Loop enquanto for possível ler uma linha dentro do arquivo turmas
+			Turma aux;											  // Criando registro temporário (visí­vel apenas dentro desta condicional)
+			while (fread(&aux, sizeof(Turma), 1, arquivo_turmas)) // Loop enquanto for possível ler uma linha dentro do arquivo turmas
 			{
-				if (aux.codigo == novo_aluno.turma)  // Caso o código da turma seja igual ao código da turma do aluno
+				if (aux.codigo == novo_aluno.turma) // Caso o código da turma seja igual ao código da turma do aluno
 				{
-					fseek(arquivo_turmas, (sizeof(Turma) * -1), SEEK_CUR);  // Reposiciona o indicador de posição do fluxo em função do deslocamento -1
-					aux.qtd_alunos++;  // Acresce a quantidade de alunos da turma 
-					fwrite(&aux, sizeof(Turma), 1, arquivo_turmas);  // Escreve as alterações no arquivo turmas
-					break;  // Término do laço
+					fseek(arquivo_turmas, (sizeof(Turma) * -1), SEEK_CUR); // Reposiciona o indicador de posição do fluxo em função do deslocamento -1
+					aux.qtd_alunos++;									   // Acresce a quantidade de alunos da turma
+					fwrite(&aux, sizeof(Turma), 1, arquivo_turmas);		   // Escreve as alterações no arquivo turmas
+					break;												   // Término do laço
 				}
 			}
-			fclose(arquivo_turmas);  //  Salva as alterações, limpando o buffer e fechando o arquivo
+			fclose(arquivo_turmas); //  Salva as alterações, limpando o buffer e fechando o arquivo
 		}
-		else  //  Se não for possí­vel abrir/criar o arquivo 'Turmas.bin'
+		else //  Se não for possí­vel abrir/criar o arquivo 'Turmas.bin'
 		{
 			printf("Problema no arquivo 'Turmas.bin'\n");
 			return;
 		}
 
-		FILE *arquivo_alunos = fopen("Alunos.bin", "a+b");  //  Abre/cria o arquivo 'Alunos.bin' "a+b" (abertura para leitura e escrita de dados)
-		if (arquivo_alunos)  // Se for posssível abrir/criar o arquivo 'Alunos.bin'
+		FILE *arquivo_alunos = fopen("Alunos.bin", "a+b"); //  Abre/cria o arquivo 'Alunos.bin' "a+b" (abertura para leitura e escrita de dados)
+		if (arquivo_alunos)								   // Se for posssível abrir/criar o arquivo 'Alunos.bin'
 		{
-			fwrite(&novo_aluno, sizeof(Aluno), 1, arquivo_alunos);  // Escreve as alterações no arquivo turmas
+			fwrite(&novo_aluno, sizeof(Aluno), 1, arquivo_alunos); // Escreve as alterações no arquivo turmas
 
 			printf("\nAluno cadastrado!\n");
-			fclose(arquivo_alunos);    //  Salva as alterações, limpando o buffer e fechando o arquivo
+			fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
 		}
-		else  // Se não for possí­vel abrir/criar o arquivo 'Turmas.bin'
+		else // Se não for possí­vel abrir/criar o arquivo 'Turmas.bin'
 		{
 			printf("\nProblema no arquivo 'Alunos.bin'\n");
 			return;
 		}
 	}
-	else  // Caso o aluno já esteja cadastrado
+	else // Caso o aluno já esteja cadastrado
 		printf("\nAluno n%co cadastrado!\n", 198);
 }
 
-/**
-* Função que imprime somente a turma da lista de espera.
-* Entrada (parâmetro(s)): <void> sem parâmetro válido, pois acessa direto componentes específicos.
-* Saída (retorno(s)): <void> sem retorno.
-*/
 void imprime_lista_espera(void)
 {
-	Turma aux = busca_turma(-1);   // Criando registro temporário (visí­vel apenas dentro desta condicional) recebendo a função busca turma (lista de espera) 
-	if (aux.qtd_alunos != 0)   // Se a quantidade de alunos da lista de espera for diferente de 0
+	Turma aux = busca_turma(-1); // Criando registro temporário (visí­vel apenas dentro desta condicional) recebendo a função busca turma (lista de espera)
+	if (aux.qtd_alunos != 0)	 // Se a quantidade de alunos da lista de espera for diferente de 0
 	{
 		FILE *arquivo_alunos = fopen("Alunos.bin", "rb"); //  Abre/Cria o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
 
@@ -236,46 +229,44 @@ void imprime_lista_espera(void)
 		{
 			Aluno aluno_espera; // Criando registro temporário (visí­vel apenas dentro desta condicional)
 
-			int havia_aluno = 0; // 
+			fseek(arquivo_alunos, 0, SEEK_END);
 
-            		fseek(arquivo_alunos, 0, SEEK_END);
+			int tamanho_maximo = ftell(arquivo_alunos);
 
-            		int tamanho_maximo = ftell(arquivo_alunos);
-
-            		fseek(arquivo_alunos, 0, SEEK_SET);
+			fseek(arquivo_alunos, 0, SEEK_SET);
 
 			puts("\n");
 
-            		imprime_cabecalho_aluno(); // Imprime o cabeçalho do aluno 
+			imprime_cabecalho_aluno();
 
 			while (fread(&aluno_espera, sizeof(Aluno), 1, arquivo_alunos) == 1) //  Vai rodar enquanto ela conseguir retornar uma linha válida
 			{
-				if (aluno_espera.turma == -1){  // Se for a lista de espera
+				if (aluno_espera.turma == -1)
+				{ // Se for a lista de espera
 
-                    			havia_aluno = 1;  
+					imprime_aluno(aluno_espera, 1);
 
-					imprime_aluno(aluno_espera, 1);  // Imprime o aluno
+					if (ftell(arquivo_alunos) == tamanho_maximo)
+						break;
 
-                    		if(ftell(arquivo_alunos) == tamanho_maximo)
-                        		break;
-
-                    		imprime_fim_aluno();  // Imprime o fechamento da linha do aluno
+					imprime_fim_aluno();
 				}
-
 			}
 
-		if(havia_aluno)
-                imprime_fim_tabela_aluno();
+			imprime_fim_aluno();
 
-	 	Turma verificador = busca_turma(-1);  // Criando registro temporário que recebe a função busca turma -1 (lista de espera) 
-		if (verificador.qtd_alunos == 0)      // Caso a quantidade de alunos seja igual a 0
-			printf("\nLista de espera vazia\n");
+			Turma verificador = busca_turma(-1);
+			if (verificador.qtd_alunos == 0)
+				printf("\nLista de espera vazia\n");
 			fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
-		}else
+		}
+		else
 			printf("Problema no arquivo 'Alunos.bin'\n");
 	}
-	else  // Se a lista de espera estiver vazia
+	else
+	{
 		printf("\nLista de espera vazia!\n");
+	}
 }
 
 /**
@@ -292,39 +283,40 @@ void imprimir_todos_alunos(void)
 	{
 		Aluno todos_alunos; // Criando registro temporário (visí­vel apenas dentro desta condicional)
 
-        	fseek(arquivo_alunos, 0, SEEK_END);  // Reposiciona o indicador de posição do fluxo em função do deslocamento
+		fseek(arquivo_alunos, 0, SEEK_END);
 
-        	int tamanho_total = ftell(arquivo_alunos); // Conta o tamanho (bytes) do arquivo alunos
+		int tamanho_total = ftell(arquivo_alunos);
 
-        	fseek(arquivo_alunos, 0, SEEK_SET); // Reposiciona o indicador de posição do fluxo em função do deslocamento
+		fseek(arquivo_alunos, 0, SEEK_SET);
 
-		if(fread(&todos_alunos, sizeof(Aluno), 1, arquivo_alunos)){  // Se for possível ler uma linha válida
+		if (fread(&todos_alunos, sizeof(Aluno), 1, arquivo_alunos))
+		{ // Se for possível ler uma linha válida
 
-            		puts("\n");
+			puts("\n");
 
-            		imprime_cabecalho_aluno();  // Imprime o cabeçalho aluno
+			imprime_cabecalho_aluno();
 
-            		fseek(arquivo_alunos, 0, SEEK_SET); // Reposiciona o indicador de posição do fluxo em função do deslocamento
+			fseek(arquivo_alunos, 0, SEEK_SET);
 
-            		while (fread(&todos_alunos, sizeof(Aluno), 1, arquivo_alunos) == 1) //  Vai rodar enquanto ela conseguir retornar uma linha válida
-            		{
+			while (fread(&todos_alunos, sizeof(Aluno), 1, arquivo_alunos) == 1)
+			{ //  Vai rodar enquanto ela conseguir retornar uma linha válida
 
-                		imprime_aluno(todos_alunos, 0); // Imprime o aluno
+				imprime_aluno(todos_alunos, 0);
 
-                		if(ftell(arquivo_alunos) == tamanho_total)  // Se o tamanho do arquivo aluno for igual ao tamanho total
-                    			break;  // Término do laço
+				if (ftell(arquivo_alunos) == tamanho_total)
+					break;
 
-                		imprime_fim_aluno();   // Imprime o fechamento de linha do aluno
+				imprime_fim_aluno();
+			}
 
-            		}
-
-            		imprime_fim_tabela_aluno();
-
-		}else  // Caso não haja alunos
-            		printf("\nN%co h%c alunos!\n", 198, 160);
+			imprime_fim_aluno();
+		}
+		else
+			printf("\nN%co h%c alunos!\n", 198, 160);
 
 		fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
-	}else  // Se não for possí­vel abrir/criar o arquivo 'Alunos.bin'
+	}
+	else
 		printf("Problema no arquivo 'Alunos.bin'\n");
 }
 
@@ -338,45 +330,39 @@ void imprime_alunos_turma(Turma aux)
 
 	FILE *arquivo_alunos = fopen("Alunos.bin", "rb"); //  Abre/Cria o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
 
-	if (arquivo_alunos != NULL)  //  Se for possível abrir/criar o arquivo 'Alunos.bin'
+	if (arquivo_alunos != NULL) //  Se for possível abrir/criar o arquivo 'Alunos.bin'
 	{
 		Aluno aluno_turma; // Criando registro temporário (visí­vel apenas dentro desta condicional)
 
-        	fseek(arquivo_alunos, 0, SEEK_END);   // Reposiciona o indicador de posição do fluxo em função do deslocamento
+		fseek(arquivo_alunos, 0, SEEK_END);
 
-        	int tamanho_total = ftell(arquivo_alunos); 
+		fseek(arquivo_alunos, 0, SEEK_SET);
 
-        	fseek(arquivo_alunos, 0, SEEK_SET);  // Reposiciona o indicador de posição do fluxo em função do deslocamento
+		Turma auxiliar = busca_turma(aux.codigo);
 
-        	Turma auxiliar = busca_turma(aux.codigo);
+		if (auxiliar.codigo != -2 && auxiliar.qtd_alunos > 0)
+		{
 
-		if(auxiliar.codigo != -2){
+			puts("\n");
 
-            		puts("\n");
-
-            		imprime_cabecalho_aluno();
-
+			imprime_cabecalho_aluno();
 		}
 
 		fseek(arquivo_alunos, 0, SEEK_SET);
 
-        	while (fread(&aluno_turma, sizeof(Aluno), 1, arquivo_alunos))
+		while (fread(&aluno_turma, sizeof(Aluno), 1, arquivo_alunos))
 		{ //  Vai rodar enquanto ela conseguir retornar uma linha válida
 			if (aux.codigo == aluno_turma.turma)
 				imprime_aluno(aluno_turma, 0);
-            		else
-                		continue;
+			else
+				continue;
 
-            		if(ftell(arquivo_alunos) == tamanho_total)
-                		break;
-
-            		imprime_fim_aluno();
+			imprime_fim_aluno();
 		}
 
-		//imprime_fim_tabela();
-
 		fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
-	}else
+	}
+	else
 		printf("Problema no arquivo 'Alunos.bin'\n");
 }
 
@@ -394,44 +380,42 @@ void editar_aluno(int matricula)
 	{
 		Aluno editar = buscar_aluno(matricula); // Criando registro temporário que recebe a função buscar aluno passando como argumento a matrícula
 
-		if (editar.matricula != -2)  // Caso ele encontre o aluno
+		if (editar.matricula != -2) // Caso ele encontre o aluno
 		{
 			printf("***********************************\n");
 			printf("\nAluno encontrado!\n\n");
 
 			puts("\n");
 
-            		imprime_cabecalho_aluno();  // Imprime o cabeçalho do aluno 
+			imprime_cabecalho_aluno();
 
-			imprime_aluno(editar, 0);   // Imprime o aluno 
+			imprime_aluno(editar, 0); // Imprime o aluno
 
-            		imprime_fim_tabela_aluno();
-
-            		puts("\n");
+			puts("\n");
 
 			int turma_antiga = editar.turma; // Salva a turma anterior
 
-			while (1)  // Laço para validar a entrada de dados do aluno
+			while (1) // Laço para validar a entrada de dados do aluno
 			{
 				if (entrada_dados_aluno(&editar) == 1)
 					break;
 			}
-			
-			fseek(arquivo_alunos, sizeof(Aluno) * -1, SEEK_CUR); // Reposiciona o indicador de posição do fluxo em função do deslocamento
-			fwrite(&editar, sizeof(Aluno), 1, arquivo_alunos);  // Escreve as alterações no arquivo alunos
+
+			fseek(arquivo_alunos, sizeof(Aluno) * -1, SEEK_CUR);
+			fwrite(&editar, sizeof(Aluno), 1, arquivo_alunos);
 			fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
 
-			int turma_nova = editar.turma;  // Salva a turma nova
+			int turma_nova = editar.turma; // Salva a turma nova
 
-			if (turma_antiga != turma_nova)  // Se a turma anterior for diferente da turma nova 
+			if (turma_antiga != turma_nova) // Se a turma anterior for diferente da turma nova
 			{
 
 				FILE *arquivo_turmas = fopen("Turmas.bin", "r+b"); //  Abre/Cria o arquivo 'Alunos.bin' "r+b"(abertura para leitura e escrita de dados)
 
-				if (arquivo_turmas)  //  Se for possível abrir/criar o arquivo 'Alunos.bin'
+				if (arquivo_turmas) //  Se for possível abrir/criar o arquivo 'Alunos.bin'
 				{
 
-					Turma turma_aux;  // Criando registro temporário
+					Turma turma_aux; // Criando registro temporário
 
 					while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)) // Enquanto for possível ler uma linha válida
 					{
@@ -439,36 +423,37 @@ void editar_aluno(int matricula)
 						if (turma_aux.codigo == turma_antiga) // Se o código da turma aux for igual a da turma antiga
 						{
 
-							turma_aux.qtd_alunos--; // Decrementa a quantidade de alunos
-							fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR); // Reposiciona o indicador de posição do fluxo em função do deslocamento
+							turma_aux.qtd_alunos--;								  // Decrementa a quantidade de alunos
+							fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR);  // Reposiciona o indicador de posição do fluxo em função do deslocamento
 							fwrite(&turma_aux, sizeof(Turma), 1, arquivo_turmas); // Escreve as alterações no arquivo turmas
-							fseek(arquivo_turmas, 0, SEEK_SET); // Reposiciona o indicador de posição do fluxo em função do deslocamento
+							fseek(arquivo_turmas, 0, SEEK_SET);					  // Reposiciona o indicador de posição do fluxo em função do deslocamento
 							break;
 						}
 					}
 
 					fseek(arquivo_turmas, 0, SEEK_SET); // Reposiciona o indicador de posição do fluxo em função do deslocamento
 
-					while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas))  // Enquanto for possível ler uma linha válida
+					while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)) // Enquanto for possível ler uma linha válida
 					{
 
-						if (turma_aux.codigo == turma_nova)  // Se o código da turma aux for igual ao da turma nova
+						if (turma_aux.codigo == turma_nova) // Se o código da turma aux for igual ao da turma nova
 						{
 
-							turma_aux.qtd_alunos++; // Acresce a quantidade de alunos
-							fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR); // Reposiciona o indicador de posição do fluxo em função do deslocamento
+							turma_aux.qtd_alunos++;								  // Acresce a quantidade de alunos
+							fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR);  // Reposiciona o indicador de posição do fluxo em função do deslocamento
 							fwrite(&turma_aux, sizeof(Turma), 1, arquivo_turmas); // Escreve as alterações no arquivo turmas
-							fseek(arquivo_turmas, 0, SEEK_SET); // Reposiciona o indicador de posição do fluxo em função do deslocamento
-							break; // Término do laço
+							fseek(arquivo_turmas, 0, SEEK_SET);					  // Reposiciona o indicador de posição do fluxo em função do deslocamento
+							break;												  // Término do laço
 						}
 					}
 
-					fclose(arquivo_turmas); //  Salva as alterações, limpando o buffer e fechando o arquivo
+					fclose(arquivo_turmas);
+					printf("Aluno editado e turma atualizada!\n");
 				}
 				else // Se não for possí­vel abrir/criar o arquivo 'Turmas.bin'
 					printf("Problema no arquivo 'Turmas.bin'\n");
 			}
-		} 
+		}
 		else // Se o aluno não for encontrado
 			printf("Aluno n%co encontrado!\n", 198);
 	}
@@ -604,7 +589,7 @@ int qtd_alunos_cadastrados(void)
 	else
 	{
 		arquivo = fopen("Alunos.bin", "w+b"); //  Abre/Cria o arquivo 'Alunos.bin' "w+b"(abertura para leitura e escrita de dados)
-		if (arquivo == NULL) //  Se não for possí­vel abrir/criar o arquivo 'Alunos.bin'
+		if (arquivo == NULL)				  //  Se não for possí­vel abrir/criar o arquivo 'Alunos.bin'
 			printf("Problema no arquivo 'Alunos.bin'\n");
 	}
 	fclose(arquivo); //  Salva as alterações, limpando o buffer e fechando o arquivo
@@ -624,43 +609,42 @@ void atualizar_lista_espera(void)
 
 	if (arquivo_alunos != NULL && arquivo_turmas != NULL) //  Se for possível abrir/criar o arquivo 'Alunos.bin'
 	{
-		Aluno aluno_aux;  // Criando registro temporário (visí­vel apenas dentro desta condicional)
-		Turma turma_aux;  // Criando registro temporário (visí­vel apenas dentro desta condicional)
-		while (fread(&aluno_aux, sizeof(Aluno), 1, arquivo_alunos))  // Enquanto for possível ler uma linha válida
+		Aluno aluno_aux;											// Criando registro temporário (visí­vel apenas dentro desta condicional)
+		Turma turma_aux;											// Criando registro temporário (visí­vel apenas dentro desta condicional)
+		while (fread(&aluno_aux, sizeof(Aluno), 1, arquivo_alunos)) // Enquanto for possível ler uma linha válida
 		{
-			if (aluno_aux.turma == -1)  // Se o código aux da turma for igual a -1 (Lista de espera)
+			if (aluno_aux.turma == -1) // Se o código aux da turma for igual a -1 (Lista de espera)
 			{
 				while (fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)) // Enquanto for possível ler uma linha válida
 				{
 					if (turma_aux.codigo == aluno_aux.aux) // Se o código da turma for igual ao aux do aluno
 					{
-						if (turma_aux.qtd_alunos < turma_aux.qtd_limite)  // Se estiver espaço na turma
+						if (turma_aux.qtd_alunos < turma_aux.qtd_limite) // Se estiver espaço na turma
 						{
-							aluno_aux.turma = turma_aux.codigo;  // O aluno recebe o código da turma
-							aluno_aux.aux = 0;  // O auxiliar do aluno é atualizado para 0
+							aluno_aux.turma = turma_aux.codigo; // O aluno recebe o código da turma
+							aluno_aux.aux = 0;					// O auxiliar do aluno é atualizado para 0
 
-							turma_aux.qtd_alunos++;  // Acresce a quantidade de alunos da turma
-							fseek(arquivo_turmas, sizeof(Turma)*-1, SEEK_CUR);  // Reposiciona o indicador de posição do fluxo em função do deslocamento
+							turma_aux.qtd_alunos++;								  // Acresce a quantidade de alunos da turma
+							fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR);  // Reposiciona o indicador de posição do fluxo em função do deslocamento
 							fwrite(&turma_aux, sizeof(Turma), 1, arquivo_turmas); // Reescrevendo a turma
 
-							fseek(arquivo_alunos, sizeof(Aluno)*-1, SEEK_CUR); // Reposiciona o indicador de posição do fluxo em função do deslocamento
+							fseek(arquivo_alunos, sizeof(Aluno) * -1, SEEK_CUR);  // Reposiciona o indicador de posição do fluxo em função do deslocamento
 							fwrite(&aluno_aux, sizeof(Aluno), 1, arquivo_alunos); // Reescrevendo o aluno
 
-							fclose(arquivo_turmas); //  Salva as alterações, limpando o buffer e fechando o arquivo
-							fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
+							fclose(arquivo_turmas);						 //  Salva as alterações, limpando o buffer e fechando o arquivo
+							fclose(arquivo_alunos);						 //  Salva as alterações, limpando o buffer e fechando o arquivo
 							arquivo_alunos = fopen("Alunos.bin", "r+b"); // abrir o arquivo alunos
 							arquivo_turmas = fopen("Turmas.bin", "r+b"); // abrir o arquivo turmas
 
-							fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas); // Leitura das linhas do arquivo turmas
-							fseek(arquivo_turmas, sizeof(Turma)*-1, SEEK_CUR); // Reposiciona o indicador de posição do fluxo em função do deslocamento
-							turma_aux.qtd_alunos--;  // Decresce a quantidade de alunos da turma
+							fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas);  // Leitura das linhas do arquivo turmas
+							fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR);  // Reposiciona o indicador de posição do fluxo em função do deslocamento
+							turma_aux.qtd_alunos--;								  // Decresce a quantidade de alunos da turma
 							fwrite(&turma_aux, sizeof(Turma), 1, arquivo_turmas); // Escreve as alterações no arquivo turmas
-							
-							fclose(arquivo_turmas);  // Salva as alterações, limpando o buffer e fechando o arquivo
-							arquivo_turmas = fopen("Turmas.bin", "r+b"); // //  Abre/Cria o arquivo 'Alunos.bin' "r+b"(abertura para leitura e escrita de dados)
 
+							fclose(arquivo_turmas);						 // Salva as alterações, limpando o buffer e fechando o arquivo
+							arquivo_turmas = fopen("Turmas.bin", "r+b"); // //  Abre/Cria o arquivo 'Alunos.bin' "r+b"(abertura para leitura e escrita de dados)
 						}
-						break;  // Término do laço
+						break; // Término do laço
 					}
 				}
 			}
@@ -669,7 +653,7 @@ void atualizar_lista_espera(void)
 		fclose(arquivo_turmas); //  Salva as alterações, limpando o buffer e fechando o arquivo
 		fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
 	}
-	else  // Se não for possí­vel abrir/criar o arquivo 'Alunos.bin' e 'Turmas.bin'
+	else // Se não for possí­vel abrir/criar o arquivo 'Alunos.bin' e 'Turmas.bin'
 		printf("Problema no arquivo 'Alunos.bin' ou 'Turmas.bin'\n");
 }
 
@@ -681,41 +665,39 @@ void atualizar_lista_espera(void)
 void imprime_aluno(Aluno aluno_aux, int escolha)
 {
 
-    putchar(186);  // Imprime caracter especial 
+	putchar(186); // Imprime caracter especial
 
-    for(int i = 0; i < 72; i++){  // Escreve uma linha inteira
+	for (int i = 0; i < 72; i++)
+	{ // Escreve uma linha inteira
 
-        if(i != 11 && i != 56 && i != 64)  // Coloca um caracter diferente como separador
-            putchar(32);  
-        else
-            putchar(186);   
+		if (i != 11 && i != 56 && i != 64) // Coloca um caracter diferente como separador
+			putchar(32);
+		else
+			putchar(186);
+	}
 
-    }
+	putchar(186);
+	putchar(10);
 
-    putchar(186);  
-    putchar(10);   
+	putchar(186);
 
-    putchar(186);   
+	if (aluno_aux.turma != -1) // Se o código aux do aluno for diferente de -1 (não está na lista de espera)
+		printf("%11d%c%-44ls%c%7d%c%7d%c\n", aluno_aux.matricula, 186, aluno_aux.nome, 186, aluno_aux.idade, 186, aluno_aux.turma, 186);
+	else if (!escolha) // Se for igual 0
+		printf("%11d%c%-44ls%c%7d%c%7d%c\n", aluno_aux.matricula, 186, aluno_aux.nome, 186, aluno_aux.idade, 186, aluno_aux.aux, 186);
+	else // Se for difente de 0
+		printf("%11d%c%-44ls%c%7d%cEspera!%c\n", aluno_aux.matricula, 186, aluno_aux.nome, 186, aluno_aux.idade, 186, 186);
 
-    if(aluno_aux.turma != -1) // Se o código aux do aluno for diferente de -1 (não está na lista de espera)
-        printf("%11d%c%-44ls%c%7d%c%7d%c\n", aluno_aux.matricula, 186, aluno_aux.nome, 186, aluno_aux.idade, 186, aluno_aux.turma, 186);
-    else
-        if(!escolha) // Se for igual 0 
-            printf("%11d%c%-44ls%c%7d%c%7d%c\n", aluno_aux.matricula, 186, aluno_aux.nome, 186, aluno_aux.idade, 186, aluno_aux.aux, 186);
-        else  // Se for difente de 0 
-            printf("%11d%c%-44ls%c%7d%cEspera!%c\n", aluno_aux.matricula, 186, aluno_aux.nome, 186, aluno_aux.idade, 186, 186);
+	putchar(186);
 
-    putchar(186);
+	for (int i = 0; i < 72; i++)
+	{
 
-    for(int i = 0; i < 72; i++){
-
-        if(i != 11 && i != 56 && i != 64)
-            putchar(32);
-        else
-            putchar(186);
-
-    }
-
+		if (i != 11 && i != 56 && i != 64)
+			putchar(32);
+		else
+			putchar(186);
+	}
 }
 
 /**
@@ -723,71 +705,71 @@ void imprime_aluno(Aluno aluno_aux, int escolha)
 * Entrada (parâmetro(s)): <void> sem parâmetro válido, pois acessa direto componentes específicos.
 * Saída (retorno(s)): <void> sem retorno.
 */
-void imprime_cabecalho_aluno(void){
+void imprime_cabecalho_aluno(void)
+{
 
-    putchar(201);  // Imprime caracter especial 
+	putchar(201); // Imprime caracter especial
 
-    for(int i = 0; i < 72; i++){  // Escreve uma linha inteira
+	for (int i = 0; i < 72; i++)
+	{ // Escreve uma linha inteira
 
-    if(i != 11 && i != 56 && i != 64)  // Coloca um caracter diferente como separador
-        putchar(205);  
-    else
-        putchar(203);  
+		if (i != 11 && i != 56 && i != 64) // Coloca um caracter diferente como separador
+			putchar(205);
+		else
+			putchar(203);
+	}
 
-    }
+	putchar(187);
+	putchar(10);
 
-    putchar(187);  
-    putchar(10);    
+	putchar(186);
 
-    putchar(186);
+	for (int i = 0; i < 72; i++)
+	{ // Escreve uma linha inteira
 
-    for(int i = 0; i < 72; i++){  // Escreve uma linha inteira
+		if (i != 11 && i != 56 && i != 64) // Coloca um caracter diferente como separador
+			putchar(32);				   // Imprime um espaço
+		else
+			putchar(186); // Imprime caracter especial
+	}
 
-        if(i != 11 && i != 56 && i != 64)  // Coloca um caracter diferente como separador
-            putchar(32);  // Imprime um espaço 
-        else
-            putchar(186);  // Imprime caracter especial 
+	putchar(186);
+	putchar(10);
 
-    }
+	putchar(186);
 
-    putchar(186);  
-    putchar(10);   
+	printf(" Matr%ccula %c                    Nome                    %c Idade %c Turma ", 161, 186, 186, 186, 186);
 
-    putchar(186);  
+	putchar(186);
+	putchar(10);
 
-    printf(" Matr%ccula %c                    Nome                    %c Idade %c Turma ", 161, 186, 186, 186, 186);
+	putchar(186);
 
-    putchar(186); 
-    putchar(10);  
+	for (int i = 0; i < 72; i++)
+	{ // Escreve uma linha inteira
 
-    putchar(186);  
+		if (i != 11 && i != 56 && i != 64) // Coloca um caracter diferente como separador
+			putchar(32);
+		else
+			putchar(186);
+	}
 
-    for(int i = 0; i < 72; i++){  // Escreve uma linha inteira
+	putchar(186);
+	putchar(10);
 
-    if(i != 11 && i != 56 && i != 64)  // Coloca um caracter diferente como separador
-        putchar(32);   
-    else
-        putchar(186);  
+	putchar(204);
 
-    }
+	for (int i = 0; i < 72; i++)
+	{ // Escreve uma linha inteira
 
-    putchar(186); 
-    putchar(10);  
+		if (i != 11 && i != 56 && i != 64) // Coloca um caracter diferente como separador
+			putchar(205);
+		else
+			putchar(206);
+	}
 
-    putchar(204);  
-
-    for(int i = 0; i < 72; i++){ // Escreve uma linha inteira
-
-        if(i != 11 && i != 56 && i != 64)  // Coloca um caracter diferente como separador
-            putchar(205);  
-        else
-            putchar(206);  
-
-    }
-
-    putchar(185);  
-    putchar(10);   
-
+	putchar(185);
+	putchar(10);
 }
 
 /**
@@ -795,23 +777,23 @@ void imprime_cabecalho_aluno(void){
 * Entrada (parâmetro(s)): <void> sem parâmetro válido, pois acessa direto componentes específicos.
 * Saída (retorno(s)): <void> sem retorno.
 */
-void imprime_fim_aluno(void){
+void imprime_fim_aluno(void)
+{
 
-    putchar(186);  // Imprime caracter especial 
-    putchar(10);   
- 
-    putchar(204);  
+	putchar(186); // Imprime caracter especial
+	putchar(10);
 
-    for(int i = 0; i < 72; i++){  // Escreve uma linha inteira
+	putchar(204);
 
-    	if(i != 11 && i != 56 && i != 64) // Coloca um caracter diferente como separador
-        	putchar(205);  
-    	else   // Caso for igual aos caracteres
-        	putchar(206);  
+	for (int i = 0; i < 72; i++)
+	{ // Escreve uma linha inteira
 
-    }
+		if (i != 11 && i != 56 && i != 64) // Coloca um caracter diferente como separador
+			putchar(205);
+		else // Caso for igual aos caracteres
+			putchar(206);
+	}
 
-    putchar(185);  
-    putchar(10);   
-
+	putchar(185);
+	putchar(10);
 }
