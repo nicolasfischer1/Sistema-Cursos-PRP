@@ -26,6 +26,7 @@ void excluir_turma(int codigo);
 void editar_turma(int codigo);
 void imprime_cabecalho_turma(void);
 void imprime_fim_turma(void);
+void imprime_fim_tabela_turma(void);
 
 /**
 * Função que preenche dados de uma turma, como entrada, fazendo todas as validações necessárias.
@@ -165,7 +166,16 @@ void imprime_todas_turmas(void)
                 if (turma_aux.codigo >= 0) //Se não for a turma de espera
                 {
                     imprime_turma(turma_aux); //Imprime a turma
-                    imprime_fim_turma(); //Imprime o fechamento da tabela
+
+                    if(fread(&turma_aux, sizeof(Turma), 1, arquivo_turmas)){ //Se houver outra turma
+
+                        imprime_fim_turma(); //Imprime o fechamento da tabela
+                        fseek(arquivo_turmas, sizeof(Turma) * -1, SEEK_CUR); //Volta uma turma
+
+                    }else{ //Se não houver mais turmas
+                        imprime_fim_tabela_turma(); //Imprime o fechamento da tabela
+                        break; //Sai do laço
+                    }
                 }
             }
 
@@ -561,4 +571,30 @@ void imprime_fim_turma(void)
 
     putchar(185); //Imprime caractere especial
     putchar(10); //Imprime nova linha
+}
+
+/**
+* Função que imprime a parte inferior da tabela de impressão de turmas.
+* Entrada (parâmetro(s)): <void> nenhum parâmetro é recebido, pois a função faz impressão estática.
+* Saída (retorno(s)):  <void> sem retorno.
+*/
+void imprime_fim_tabela_turma(void){
+
+    putchar(186);
+    putchar(10);
+
+    putchar(200);
+
+    for(int i = 0; i < 74; i++){
+
+        if(i != 9 && i != 45 && i != 55 && i != 64)
+            putchar(205);
+        else
+            putchar(202);
+
+    }
+
+    putchar(188);
+    putchar(10);
+
 }
