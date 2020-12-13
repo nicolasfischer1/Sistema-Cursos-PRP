@@ -10,7 +10,7 @@
 #include <stdlib.h>  // Biblioteca padrão para manipulação de memória com uso dinâmico
 #include <windows.h> // Biblioteca padrão do Windows
 
-#include "Manipulacao_Alunos.h" // Inclusão da biblioteca interna (criada para o projeto)
+#include "Bibliotecas/Manipulacao_Alunos.h" // Inclusão da biblioteca interna (criada para o projeto)
                                 // Traz as funções de manipulação dos alunos
                                 // As demais importações foram feitas nessa biblioteca, sendo nescessário refazer.
 
