@@ -6,7 +6,7 @@ Nele é utilizado estruturas de registro com gravação dos dados em arquivo bin
 Professor Orientador: Ivan S.  
 Alunos: Nicolas Fischer, Bruno Bolzan e Patrick Priebe.  
 Linguagem: C 99  
-**ATENÇÃO:**  
+### ATENÇÃO 
 Os diretórios foram organizados da forma que encontramos e pensamos ser a mais facilitada: as bibliotecas utilizadas estão disponíveis dentro da sua respectiva pasta e o arquivo com o código principal encontrasse na raiz do repositório!  
 Para testar o programa, abra a pasta "Executavel" e depois execute o arquivo "Main.exe". Note que ao finalizar a execução dele, serão criados dois arquivos, o "Turmas.bin" e "Alunos.bin".  
 Estes servem para armazenar os dados coletados e tem funcionamento de banco de dados no escopo do programa. Todos os dados que você cadastrar/inserir serão mantidos nos arquivos.  
