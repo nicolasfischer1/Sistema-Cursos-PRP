@@ -117,7 +117,7 @@ int main(void)
                 {
                     imprime_cabecalho_turma();
                     imprime_turma(aux_t);
-                    imprime_fim_turma();
+                    imprime_fim_tabela_turma();
                 }
                 else
                     printf("\nTurma n%co encontrada\n", 198);
@@ -178,14 +178,13 @@ int main(void)
                 aux_a = buscar_aluno(i);
                 if (aux_a.matricula != -2)
                 {
-
                     puts("\n");
 
                     imprime_cabecalho_aluno();
 
                     imprime_aluno(aux_a, 0);
 
-                    imprime_fim_aluno();
+                    imprime_fim_tabela_aluno();
                 }
                 else
                     printf("Aluno n%co encontrado!\n", 198);
