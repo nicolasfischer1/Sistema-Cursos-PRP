@@ -27,6 +27,7 @@ void imprime_aluno(Aluno aluno_aux, int escolha);
 void atualizar_lista_espera(void);
 void imprime_cabecalho_aluno(void);
 void imprime_fim_aluno(void);
+void imprime_fim_tabela_aluno(void);
 
 /**
 * Função que busca um aluno na base de dados.
@@ -233,9 +234,11 @@ void imprime_lista_espera(void)
 		{
 			Aluno aluno_espera; // Criando registro temporário (visível apenas dentro desta condicional)
 
-			fseek(arquivo_alunos, 0, SEEK_END); // Reposiciona o indicador de posição do fluxo em função do deslocamento
+			int ocorrencias = 0; // Variável para guardar o número de ocorrências de alunos da turma de espera
 
-			int tamanho_maximo = ftell(arquivo_alunos); // Conta o tamanho do arquivo alunos
+            while(fread(&aluno_espera, sizeof(Aluno), 1, arquivo_alunos)) // Percorrer o arquivo
+                if(aluno_espera.turma == aux.codigo) // Se encontrar um aluno com a turma de espera
+                    ocorrencias++; // Incrementa o número de ocorrências
 
 			fseek(arquivo_alunos, 0, SEEK_SET); // Reposiciona o indicador de posição do fluxo em função do deslocamento
 
@@ -249,15 +252,16 @@ void imprime_lista_espera(void)
 				{ // Se for a lista de espera
 
 					imprime_aluno(aluno_espera, 1);
+					ocorrencias--; // Decrementa o número de ocorrências
 
-					if (ftell(arquivo_alunos) == tamanho_maximo) // Se atingiu o tamanho máximo
-						break;									 // Término do laço
-
-					imprime_fim_aluno(); // Imprime o fim da linha do aluno
+					if(ocorrencias != 0) // Se houverem mais ocorrências de alunos na turma de espera
+                        imprime_fim_aluno(); // Imprime o fim da linha do aluno
+                    else{ // Se não houverem mais ocorrências de alunos na turma de espera
+                        imprime_fim_tabela_aluno(); // Imprime o fim da tabela
+                        break; // Sai do laço
+                    }
 				}
 			}
-
-			imprime_fim_aluno(); // Imprime o fim da linha do aluno
 
 			Turma verificador = busca_turma(-1); // Criando registro temporário que recebe a função busca turma -1 (lista de espera)
 			if (verificador.qtd_alunos == 0)	 // Caso a quantidade de alunos seja igual a 0
@@ -280,7 +284,6 @@ void imprime_lista_espera(void)
 */
 void imprimir_todos_alunos(void)
 {
-
 	FILE *arquivo_alunos = fopen("Alunos.bin", "rb"); //  Abre/Cria o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
 
 	if (arquivo_alunos != NULL) // Se for possível abrir/criar o arquivo 'Alunos.bin'
@@ -307,13 +310,14 @@ void imprimir_todos_alunos(void)
 
 				imprime_aluno(todos_alunos, 0); // Imprime o aluno
 
-				if (ftell(arquivo_alunos) == tamanho_total) // Se o tamanho do arquivo aluno for igual ao tamanho total
+				if (ftell(arquivo_alunos) == tamanho_total){ // Se o tamanho do arquivo aluno for igual ao tamanho total
+					imprime_fim_tabela_aluno();
 					break;									// Término do laço
+				}
 
 				imprime_fim_aluno(); // Imprime o fechamento de linha do aluno
 			}
 
-			imprime_fim_aluno(); // Imprime o fechamento de linha do aluno
 		}
 		else // Caso não haja aluno
 			printf("\nN%co h%c alunos!\n", 198, 160);
@@ -331,16 +335,19 @@ void imprimir_todos_alunos(void)
 */
 void imprime_alunos_turma(Turma aux)
 {
-
 	FILE *arquivo_alunos = fopen("Alunos.bin", "rb"); //  Abre/Cria o arquivo 'Alunos.bin' "rb"(abertura para leitura de dados)
 
 	if (arquivo_alunos != NULL) //  Se for possível abrir/criar o arquivo 'Alunos.bin'
 	{
 		Aluno aluno_turma; // Criando registro temporário (visível apenas dentro desta condicional)
 
-		fseek(arquivo_alunos, 0, SEEK_END); // Reposiciona o indicador de posição do fluxo em função do deslocamento
+		int ocorrencias = 0; // Variável para guardar o número de ocorrências de alunos da turma especificada
 
-		fseek(arquivo_alunos, 0, SEEK_SET); // Reposiciona o indicador de posição do fluxo em função do deslocamento
+		while(fread(&aluno_turma, sizeof(Aluno), 1, arquivo_alunos)) // Percorrer o arquivo
+            if(aluno_turma.turma == aux.codigo) // Se encontrar um aluno com a turma especificada
+                ocorrencias++; // Incrementa o número de ocorrências
+
+        fseek(arquivo_alunos, 0, SEEK_SET); // Volta ao início do arquivo
 
 		Turma auxiliar = busca_turma(aux.codigo); // Criando registro temporário que recebe a função busca turma passando como argumento o código do aux
 
@@ -356,12 +363,14 @@ void imprime_alunos_turma(Turma aux)
 
 		while (fread(&aluno_turma, sizeof(Aluno), 1, arquivo_alunos)) //  Vai rodar enquanto ela conseguir retornar uma linha válida
 		{
-			if (aux.codigo == aluno_turma.turma) // Se o código do aux for igual ao da turma
-				imprime_aluno(aluno_turma, 0);	 // Imprime o aluno
-			else
-				continue;
-
-			imprime_fim_aluno();
+			if (aux.codigo == aluno_turma.turma){ // Se o código do aux for igual ao da turma
+				imprime_aluno(aluno_turma, 0); // Imprime o aluno
+				ocorrencias--; // Decrementa o número de ocorrências
+				if(ocorrencias != 0) // Se houverem mais ocorrências
+                    imprime_fim_aluno(); // Imprime o fim de linha
+                else // Se não houverem mais ocorrências
+                    imprime_fim_tabela_aluno(); // Imprime o fechamento de tabela
+			}
 		}
 
 		fclose(arquivo_alunos); //  Salva as alterações, limpando o buffer e fechando o arquivo
@@ -801,4 +810,26 @@ void imprime_fim_aluno(void)
 
 	putchar(185);
 	putchar(10);
+}
+
+///asdfjasfjkashfjksahf
+void imprime_fim_tabela_aluno(void){
+
+    putchar(186);
+    putchar(10);
+
+    putchar(200);
+
+    for(int i = 0; i < 72; i++){
+
+        if(i != 11 && i != 56 && i != 64)
+            putchar(205);
+        else
+            putchar(202);
+
+    }
+
+    putchar(188);
+    putchar(10);
+
 }
