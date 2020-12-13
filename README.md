@@ -14,7 +14,12 @@ Para testar o programa, abra a pasta "Executavel" e depois execute o arquivo "Si
 Academic project of the discipline of Programming for Problem Solving, which consists of a system of courses where classes and students can be manipulated in various ways!  
 It uses record structures with data recording in a binary file (.bin).  
 Language: C 99  
-Graphical API: Win32 API  
+
+### Note:  
+
+The folders were organized in the way we thought to be the easiest: the libraries used are available inside their folder, while the main code file may be found in the repository's root!  
+In order to test the program, go to the "Executavel" folder and execute the "Sistema-de-Cursos.exe" file. Note that at the end of its execution, the files "Turmas.bin" and "Alunos.bin" will be created, having the purpose of storing the collected data and working as a database in the program's context. All data inserted will be kept in the files.  
+
 
 ## Русский:
 Академический проект дисциплины по программированию для решения задач, который состоит из системы курсов, в которых уроки для студентов могут управляться различными путями!  
