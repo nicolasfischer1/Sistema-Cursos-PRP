@@ -128,7 +128,10 @@ int main(void)
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
                 if (aux_t.codigo >= 0)  // Se turma encontrada
-                    editar_turma(i);
+                    {
+                        editar_turma(i);
+                        atualizar_lista_espera();
+                    }
                 else    // Se turma não encontrada
                     printf("Turma n%co encontrada.\n", 198);
                 break;
