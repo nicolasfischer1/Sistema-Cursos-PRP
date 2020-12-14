@@ -471,12 +471,11 @@ void editar_turma(int codigo)
                                     fopen("Alunos.bin", "r+b"); //Reabre o arquivo de alunos
                                 }
                             }
+                            printf("A turma foi editada, bem como seus alunos!\n"); //Informa que a turma foi editada
                             break; //Sai do laço
                         }
                         else //Se o arquivo de alunos não pôde ser aberto
                             printf("Problema no arquivo 'Alunos.bin'\n");
-
-                        printf("A turma foi editada, bem como seus alunos!\n"); //Informa que a turma foi editada
                     }
                 }
             }
