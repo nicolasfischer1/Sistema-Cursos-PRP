@@ -812,7 +812,11 @@ void imprime_fim_aluno(void)
 	putchar(10);
 }
 
-///asdfjasfjkashfjksahf
+/**
+* Função que serve para imprimir conexões final do rodapé de encaixe da tabela.
+* Entrada (parâmetro(s)): <void> sem parâmetro válido, pois acessa direto componentes específicos.
+* Saída (retorno(s)): <void> sem retorno.
+*/
 void imprime_fim_tabela_aluno(void){
 
     putchar(186);
@@ -828,7 +832,6 @@ void imprime_fim_tabela_aluno(void){
             putchar(202);
 
     }
-
     putchar(188);
     putchar(10);
 

@@ -113,13 +113,13 @@ int main(void)
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
-                if (aux_t.codigo >= 0)
+                if (aux_t.codigo >= 0)  // Se turma for encontrada
                 {
                     imprime_cabecalho_turma();
                     imprime_turma(aux_t);
                     imprime_fim_tabela_turma();
                 }
-                else
+                else    // Se turma não encontrada
                     printf("\nTurma n%co encontrada\n", 198);
                 break;
             case 6: // Rotina editar dados de uma turma
@@ -127,9 +127,9 @@ int main(void)
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
-                if (aux_t.codigo >= 0)
+                if (aux_t.codigo >= 0)  // Se turma encontrada
                     editar_turma(i);
-                else
+                else    // Se turma não encontrada
                     printf("Turma n%co encontrada.\n", 198);
                 break;
             case 7: // Rotina exclui uma turma
@@ -137,9 +137,9 @@ int main(void)
                 fflush(stdin);
                 scanf("%d", &i);
                 aux_t = busca_turma(i);
-                if (aux_t.codigo >= 0)
+                if (aux_t.codigo >= 0)   // Se turma encontrada
                     excluir_turma(i);
-                else
+                else    // Se turma não encontrada
                     printf("Turma n%co encontrada.\n", 198);
                 break;
             case 8: // Rotina quantidade de turmas

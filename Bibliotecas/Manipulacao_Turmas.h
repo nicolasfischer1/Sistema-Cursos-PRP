@@ -574,9 +574,9 @@ void imprime_fim_turma(void)
 }
 
 /**
-* Função que imprime a parte inferior da tabela de impressão de turmas.
-* Entrada (parâmetro(s)): <void> nenhum parâmetro é recebido, pois a função faz impressão estática.
-* Saída (retorno(s)):  <void> sem retorno.
+* Função que serve para imprimir conexões final do rodapé de encaixe da tabela.
+* Entrada (parâmetro(s)): <void> sem parâmetro válido, pois acessa direto componentes específicos.
+* Saída (retorno(s)): <void> sem retorno.
 */
 void imprime_fim_tabela_turma(void){
 
