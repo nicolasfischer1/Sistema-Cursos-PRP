@@ -53,6 +53,7 @@ Aluno buscar_aluno(int matricula)
 		while (fread(&buscar, sizeof(Aluno), 1, arquivo_alunos) == 1) // Loop enquanto for possível ler uma linha do arquivo alunos
 		{
 			if (matricula == buscar.matricula) // Compara as matrículas
+				fclose(arquivo_alunos);                    // Fecha o arquivo
 				return buscar;				   // Retorna o aluno
 		}
 		buscar.matricula = -2;	// Caso não encontre retorna -2
