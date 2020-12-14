@@ -2,7 +2,14 @@
  * Programa principal, arquivo com código fonte principal "Main.c".
  * Implementação das funções que tratam da manipulação e curadoria dos dados das turmas.
  * Criado em: 29/10/2020.
- * Última modificação por Nicolas Fischer no dia 08/12/2020.
+ * Última modificação por Nicolas Fischer no dia 14/12/2020.
+*/
+/**
+ * Projeto acadêmico da disciplina de Programação para Resolução de Problemas, que consiste num sistema de cursos onde pode-se manipular de variadas formas as turmas e alunos!
+ * Nele é utilizado estruturas de registro com gravação dos dados em arquivo binário (.bin).
+ * Professor Orientador: Ivan S.
+ * Alunos: Nicolas Fischer, Bruno Bolzan e Patrick Priebe.
+ * Linguagem: C 99
 */
 
 // Inclusão de bibliotecas padrões da linguagem

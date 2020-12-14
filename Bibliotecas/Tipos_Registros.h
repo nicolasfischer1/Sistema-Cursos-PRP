@@ -2,7 +2,14 @@
  * Biblioteca "Tipos_Registros.h".
  * Definição das estruturas de registro e tipos de variáveis criadas com base nelas.
  * Criado em: 29/10/2020.
- * Última modificação por Nicolas Fischer no dia 08/10/2020.
+ * Última modificação por Nicolas Fischer no dia 14/12/2020.
+*/
+/**
+ * Projeto acadêmico da disciplina de Programação para Resolução de Problemas, que consiste num sistema de cursos onde pode-se manipular de variadas formas as turmas e alunos!
+ * Nele é utilizado estruturas de registro com gravação dos dados em arquivo binário (.bin).
+ * Professor Orientador: Ivan S.
+ * Alunos: Nicolas Fischer, Bruno Bolzan e Patrick Priebe.
+ * Linguagem: C 99
 */
 
 struct aluno //  Estrutura (registro) "aluno"

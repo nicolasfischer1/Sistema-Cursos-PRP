@@ -2,7 +2,14 @@
  * Biblioteca "Manipulacao_Turmas.h".
  * Implementação das funções que tratam da manipulação e curadoria dos dados das turmas.
  * Criado em: 29/10/2020.
- * Última modificação por Nicolas Fischer no dia 08/12/2020.
+ * Última modificação por Nicolas Fischer no dia 14/12/2020.
+*/
+/**
+ * Projeto acadêmico da disciplina de Programação para Resolução de Problemas, que consiste num sistema de cursos onde pode-se manipular de variadas formas as turmas e alunos!
+ * Nele é utilizado estruturas de registro com gravação dos dados em arquivo binário (.bin).
+ * Professor Orientador: Ivan S.
+ * Alunos: Nicolas Fischer, Bruno Bolzan e Patrick Priebe.
+ * Linguagem: C 99
 */
 
 // Inclusão de bibliotecas padrões da linguagem
@@ -216,8 +223,6 @@ Turma busca_turma(int aux)
         // caso não ocorra retorno antes (turma não encontrada)
         fclose(arquivo_turmas); // fecha o arquivo
     }
-    else // Se arquivo não aberto
-        printf("Problema no arquivo 'Turmas.bin'\n");
 
     turma_aux.codigo = -2; // coloca marcador lógico no código de retorno para eventuais verificações
     return turma_aux;      // retorna turma com marcação lógica
