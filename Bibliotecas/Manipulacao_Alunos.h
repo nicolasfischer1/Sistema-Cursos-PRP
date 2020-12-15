@@ -128,7 +128,7 @@ int entrada_dados_aluno(Aluno *novo_aluno)
 
 	Aluno a_validador = buscar_aluno(novo_aluno->matricula); // Verifica se a matrícula já existe
 
-	if (novo_aluno->matricula >= 0 && a_validador.matricula != -2) // Caso a matrícula seja maior ou igual a 0 e o validador tenha retornado -2 (matrícula inexistente)
+	if (novo_aluno->matricula >= 0 && a_validador.matricula == -2) // Caso a matrícula seja maior ou igual a 0 e o validador tenha retornado -2 (matrícula inexistente)
 	{
 		printf("Nome: ");				   // Inserção do nome do aluno
 		fflush(stdin);					   // Limpa o buffer
