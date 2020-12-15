@@ -411,6 +411,8 @@ void editar_aluno(int matricula)
 			imprime_cabecalho_aluno(); // Imprime o cabeçalho do aluno
 
 			imprime_aluno(editar, 0); // Imprime o aluno
+			
+			imprime_fim_tabela_aluno(); // Imprime o fim da tabela
 
 			puts("\n");
 
