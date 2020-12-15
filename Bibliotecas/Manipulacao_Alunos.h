@@ -352,10 +352,10 @@ void imprime_alunos_turma(Turma aux)
 		int ocorrencias = 0; // Variável para guardar o número de ocorrências de alunos da turma especificada
 
 		while(fread(&aluno_turma, sizeof(Aluno), 1, arquivo_alunos)) // Percorrer o arquivo
-            if(aluno_turma.turma == aux.codigo) // Se encontrar um aluno com a turma especificada
-                ocorrencias++; // Incrementa o número de ocorrências
+            		if(aluno_turma.turma == aux.codigo) // Se encontrar um aluno com a turma especificada
+                		ocorrencias++; // Incrementa o número de ocorrências
 
-        fseek(arquivo_alunos, 0, SEEK_SET); // Volta ao início do arquivo
+        	fseek(arquivo_alunos, 0, SEEK_SET); // Volta ao início do arquivo
 
 		Turma auxiliar = busca_turma(aux.codigo); // Criando registro temporário que recebe a função busca turma passando como argumento o código do aux
 
@@ -375,9 +375,9 @@ void imprime_alunos_turma(Turma aux)
 				imprime_aluno(aluno_turma, 0); // Imprime o aluno
 				ocorrencias--; // Decrementa o número de ocorrências
 				if(ocorrencias != 0) // Se houverem mais ocorrências
-                    imprime_fim_aluno(); // Imprime o fim de linha
-                else // Se não houverem mais ocorrências
-                    imprime_fim_tabela_aluno(); // Imprime o fechamento de tabela
+				    imprime_fim_aluno(); // Imprime o fim de linha
+				else // Se não houverem mais ocorrências
+				    imprime_fim_tabela_aluno(); // Imprime o fechamento de tabela
 			}
 		}
 
